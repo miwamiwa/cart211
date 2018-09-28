@@ -1,0 +1,5 @@
+https://www.w3schools.com/css/tryit.asp?filename=trycss_cursor
+https://www.w3schools.com/css/tryit.asp?filename=trycss_letter-spacing
+https://www.w3schools.com/css/tryit.asp?filename=trycss_text_word-spacing
+https://www.w3schools.com/css/tryit.asp?filename=trycss_table_hover
+https://www.w3schools.com/css/tryit.asp?filename=trycss_table_fancy

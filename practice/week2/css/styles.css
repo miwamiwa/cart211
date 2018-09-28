@@ -1,0 +1,49 @@
+ /* hi there */ 
+/* css reset */     
+*{
+margin: 0;
+padding: 0;
+text-align: justify;
+}
+
+
+body {
+background-color: gold;
+/* use font Gotham, if not working use next on list, if none working use any working sans-serif*/
+font-family: Gotham, Helvetica, Arial, "sans-serif";
+} 
+h1{
+/* parameters declared above are inherited unless stated otherwise*/
+background-color: white;
+font-family: Georgia, "serif";
+font-size: 50px;
+}
+
+header{
+background-color: goldenrod;
+padding: 20px; 
+font-size: 30px;
+margin-bottom: 20px;
+}
+
+header h1{
+font-size:100px;
+font-family: Comic Sans MS;
+}
+
+nav{
+background-color: lightgrey;
+}
+
+article{
+margin-bottom:50px;
+}
+
+p{
+margin-bottom:20px;
+line-height: 30px;
+}
+
+footer{
+background-color: red;
+}
