@@ -1,0 +1,49 @@
+/* CSS Document */
+/* relative position example */
+div{
+	background-color:lightgrey;
+	/* 40% of window width */
+	width:40%;
+	margin:0 auto;
+	padding:10px;
+	position:relative;
+}
+
+section{
+	width:200px;
+	height:200px;
+	margin:10px;
+	background-color:#333;
+/*	display:inline-block; */
+	
+}
+
+/* create a new class */
+.kya{
+	background-color:tomato;
+
+/* relative position: relative to wherever i would be without relative pos 
+	the initial positioning of relatively positionned element implied in the placement of other elements
+	*/ 
+	position:relative; 
+	left:50px;
+	top:50px;
+	
+}
+
+/* create a new id */
+#ouch{
+	background-color:lightgreen;
+	
+	/* absolute position stays at the indicated position on the page (not the screen)
+	doesnt matter if contained another element, always relative to page position 
+	UNLESS parent element (div in this case) has a relative position
+	page size relative to window size and content size (example absolute+right:50px is always 50px from right side)
+	
+	*/
+	
+	position:absolute;
+	top:20px;
+	left:40px;
+	
+}

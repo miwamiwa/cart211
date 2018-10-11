@@ -1,0 +1,86 @@
+ /* hi there */ 
+/* css reset */     
+*{
+margin: 0;
+padding: 0;
+/* declaring border-box makes padding (not margin) contained WITHIN box width and height, 
+rather than it being added to box width and height  */
+box-sizing:border-box;
+}
+body{
+	/* gotham not a bad font tbh*/
+	font-family:Gotham, Arial;
+	background:lightgrey;
+	
+}
+nav, article, header{
+	border:solid 1px black;
+	margin:10px;
+	
+}
+
+nav{
+	background-color:lightblue;
+	margin:0px;
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+}
+
+a:link{
+	display:inline-block;
+	background-color: lightblue;
+	color: white;
+	padding: 10px 20px;
+	text-decoration: none;
+}
+a:visited{
+	color: white;
+}
+a:hover{
+	background-color: white;
+	color: black;
+}
+a:active{
+	background-color: yellow;
+}
+/* ====== HEADER SECTION HERE =======
+make sections using comments it looks nice */
+header{
+	padding:50px 10px 20px;
+	
+	
+}
+header h1{
+	
+	font-size:63px;
+	text-transform: capitalize;
+	text-align: center;
+}
+
+header h2{
+	
+	font-family: Georgia;
+	color: darkgrey;
+}
+/* ====== ARTICLE SECTION HERE =======*/
+article{
+	padding: 40px;
+	
+}
+article h1{
+	
+	text-transform:uppercase;
+}
+article p{
+	line-height: 30px;
+}
+/* =====FOOTER SECTION HERE=======*/
+footer{
+	text-align:center;
+
+	font-size: 14px;
+		font-transform:italic;
+	
+}
