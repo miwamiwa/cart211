@@ -168,7 +168,7 @@ function mousePressed(){
   console.log(mouseX+"  "+mouseY);
 var mouseElsewhere=true;
   for(var i=0; i<frame; i++){
-    if(dist(mouseX,mouseY,e1x[i],e1y[i]) <e1d[i]/2&&mouseX>500&&mouseY>180){
+    if(dist(mouseX,mouseY,e1x[i],e1y[i]) <e1d[i]/2&&(mouseX>500||mouseY>180)){
 link="https://www.google.com"
   windowObjectReference = window.open(link, "yo", strWindowFeatures);
   mouseElsewhere=false;
