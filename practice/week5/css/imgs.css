@@ -1,0 +1,67 @@
+	@import url('https://fonts.googleapis.com/css?family=Charmonman');
+/* CSS Document */
+*{
+	margin:0;
+	padding:0;
+	box-sizing:border-box; /* width includes padding */
+	color:black;
+  font-family: 'Charmonman', cursive;
+	/* setting font size for everything means any font size mentionned after will be inherited (thus will not appear any different) */
+/* font-size:15px; */
+
+}
+html, body{
+	height:100%;
+
+}
+
+#s1{
+	background:url(../images/bg.jpg) no-repeat fixed center center;
+	background-size:cover;
+	width:100%;
+	height:100%;
+	font-size:20px;
+
+}
+
+#s1 hgroup{
+	background:#fff;
+	width:25%;
+	padding:20px;
+	text-align:right;
+	position:absolute;
+	bottom:20px;
+	right:20px;
+line-height:20px;
+font-size:70px;
+text-transform:uppercase;
+	}
+
+#s2{
+	background:green;
+	min-height:20%;
+	height:auto;
+	width:100%;
+	padding:20px;
+}
+#s2 article{
+column-count:4;
+}
+#s3{
+	background:blue;
+	height:100%;
+	position:relative;
+}
+#s3 article{
+	background:#fff;
+	width:25%;
+	max-height:100%;
+	padding:20px;
+	text-align:right;
+	position:absolute;
+	top:20px;
+	right:20px;
+line-height:20px;
+font-size:70px;
+text-transform:uppercase;
+}
