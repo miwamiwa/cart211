@@ -1,64 +1,91 @@
+@import url('https://fonts.googleapis.com/css?family=Orbitron|Rye');
+
 /* CSS Document */
 *{
-	margin:0;
-	padding:0;
-	box-sizing:border-box; /* width includes padding */
-	color:black;
+margin:0;
+padding:0;
+box-sizing:border-box; /* width includes padding */
+color:black;
+
+  /**/
+/* setting font size for everything means any font size mentionned after will be inherited (thus will not appear any different) */
+/* font-size:15px; */
+
 }
 html, body{
 	height:100%;
 }
-@font-face {
-   font-family: myfont;
-   src: url(amandine.ttf);
-}
-article{
-	font-family:myfont, sans-serif;
-	font-size:17px;
-	width:50%;
-	margin:50px;
-	padding:25px;
-	text-align:center;
-	box-shadow: 5px 5px beige;
-	border-radius:50px;
-	opacity:0.8;
+nav{
+	font-size:25px;
+	font-family: 'Orbitron', sans-serif;
+	position:fixed;
+	left:40%;
+	bottom:0;
 }
 
+
+
+h1{
+color:red;
+font-family: 'Orbitron', sans-serif;
+font-size: 80px;
+line-height:77px;
+display:inline;
+}
+h2{
+	color:blue;
+	font-family: 'Rye', cursive;
+	font-size: 80px;
+	line-height:77px;
+	display:inline;
+}
+article{
+	width:65%;
+	margin:0px;
+	padding:20px 20px;
+}
+
+
+
 #sec1{
-	background:url(../images/kame1.jpg) no-repeat fixed center center;
+	background:url(../images/stepone.jpg) no-repeat fixed center center;
 	background-size:cover;
 	width:100%;
 	height:100%;
 	position:relative;
-
 	}
 #sec2{
-		background:url(../images/kame2.jpg) no-repeat fixed center center;
+  background:url(../images/steptwo.jpg) no-repeat fixed center center;
 	background-size:cover;
 	height:100%;
- position:relative;
+  position:relative;
 }
 #sec3{
-		background:url(../images/kame3.jpg) no-repeat fixed center center;
+	background:url(../images/stepthree.jpg) no-repeat fixed center center;
 	background-size:cover;
 	height:100%;
 	position:relative;
+
 }
 #art1{
 	position:absolute;
 	top:0;
-	left:0;
-	background: lightblue;
+	right:0;
+	text-align: right;
+	text-shadow:2px -2px white;
 }
 #art2{
+	width:70%;
 	position:absolute;
-bottom:0;
-right:0;
-	background: lightgreen;
+	top:0;
+  left:0;
+	text-align: left;
+	text-shadow:-2px -2px white;
 }
 #art3{
 	position:absolute;
-  bottom:0;
-  left:0;
-	background: pink;
+  bottom:10%;
+  right:0;
+	text-align: right;
+	text-shadow:2px -2px white;
 }
