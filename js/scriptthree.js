@@ -169,7 +169,7 @@ function mousePressed(){
 var mouseElsewhere=true;
   for(var i=0; i<frame; i++){
     if(dist(mouseX,mouseY,e1x[i],e1y[i]) <e1d[i]/2&&(mouseX>500||mouseY>180)){
-link="https://www.google.com"
+link="midterm/index.html"
   windowObjectReference = window.open(link, "yo", strWindowFeatures);
   mouseElsewhere=false;
 }

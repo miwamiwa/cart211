@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css?family=EB+Garamond');
+@import url('https://fonts.googleapis.com/css?family=Aladin|Cambo|Cedarville+Cursive|Gabriela|IM+Fell+Double+Pica|Marcellus+SC|Rufina');
+
+/* CSS Document */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box; /* width includes padding */
+color:white;
+font-family: 'EB Garamond', serif;
+user-select: none;
+}
+html, body{
+	height:100%;
+
+}
+body{
+	display: flex;
+	width:100%;
+}
+
+section{
+	height:100%;
+	width:40%;
+}
+#sec6{
+	color:white;
+	background-color:transparent;
+	position:fixed;
+}
+#sec7{
+	color:black;
+	background-color:lightgrey;
+	position:fixed;
+}
+#title{
+	padding:2vw 3vw 0vw;
+	  font-size:3vw;
+		line-height:120%;
+}
+
+nav{
+	margin:2vw;
+	padding:2vw 1vw;
+	display:flex;
+	position:fixed;
+	flex-flow: column;
+  align-items: stretch;
+  height:auto;
+	font-size:4.8vw;
+		line-height:100%;
+		background-color:transparent;
+}
+nav a{
+	width:100%;
+	height:12%;
+  text-align:center;
+	padding:0px;
+}
+nav a:link{
+	color:white;
+}
+a:hover#link1 {
+	color:yellow;
+}
+a:hover#link2 {
+	color:blue;
+}
+a:hover#link3 {
+	color:red;
+	}
+	#linkb1{
+		color:black;
+	}
+	#linkb2{
+		color:black;
+	}
+	#linkb3{
+		color:black;
+	}
+a:hover#linkb1 {
+	color:yellow;
+}
+a:hover#linkb2 {
+	color:blue;
+}
+a:hover#linkb3 {
+	color:red;
+}
+nav a:active{
+	background:white;
+}
+
+#mainsection{
+	  font-size:2vw;
+		padding:3vw;
+		width:70%;
+		position:fixed;
+		left:30%;
+		display: flex;
+		flex-flow: column wrap;
+justify-content: center;
+align-items: center;
+text-align:center;
+}
+#mainsection2{
+	  font-size:2vw;
+		padding:3vw;
+		width:70%;
+		position:fixed;
+		left:30%;
+		display: flex;
+justify-content: center;
+top:2%;
+text-align:center;
+}
+
+h4{
+	background-color:orange;
+	padding:20px;
+}
+#sketch-holder2{
+	position:fixed;
+	top:0;
+	left:0;
+
+}
+
+#sketch-holder{
+position: fixed;
+	top:0;
+	left:0;
+}
+#rufina{
+	font-family: 'Rufina', serif;
+}
+
+#cedarville{
+	font-family: 'Cedarville Cursive', cursive;
+}
+
+#gabriela{
+	font-family: 'Gabriela', serif;
+}
+#imfell{
+		font-family: 'IM Fell Double Pica', serif;
+}
+#essaysection{
+		width:70%;
+		left:30%;
+    position:absolute;
+
+}
+h3{
+	background-color:orange;
+	color:black;
+	padding:20px;
+}
+#essaynav{
+	color:black;
+	margin:0;
+
+
+}
