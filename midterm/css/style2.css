@@ -9,10 +9,11 @@
 	font-family: 'EB Garamond', serif;
 	user-select: none;
 }
+
 html, body{
 	height:100%;
-
 }
+
 body{
 	display: flex;
 	width:100%;
@@ -22,6 +23,7 @@ section{
 	height:100%;
 	width:40%;
 }
+
 /* title section */
 #sec6{
 	color:white;
@@ -158,19 +160,20 @@ h4{
 	color:black;
 	font-family: 'IM Fell Double Pica', serif;
 
-
+}
 /* essay page */
+h3{
+	background-color:#e3f2f0;
+	color:black;
+	padding:20px;
+}
 #essaysection{
 	width:70%;
 	left:30%;
 	position:absolute;
 
 }
-h3{
-	background-color:#e3f2f0;
-	color:black;
-	padding:20px;
-}
+
 #essaynav{
 	color:black;
 	margin:0;
