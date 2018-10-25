@@ -15,25 +15,25 @@ function preload(){
 
 }
 function setup(){
-canvas=  createCanvas(window.innerWidth, window.innerHeight);
-canvas.parent('sketch-holder2');
-background(bgcolor);
-noStroke();
+  canvas=  createCanvas(window.innerWidth, window.innerHeight);
+  canvas.parent('sketch-holder2');
+  background(bgcolor);
+  noStroke();
 }
 
 function draw(){
-if(lastWidth!=window.innerWidth||lastHeight!=window.innerHeight){
-  update();
-}
-var img=0;
-var imgScale = window.innerWidth/3000;
-switch(currentImage){
-  case 1: img = image1; break;
-  case 2: img = image2; break;
-  case 3: img = image3; break;
-  case 4: img = image4; break;
-}
-image(img, 0.485*width, 0.35*height, img.width*imgScale, img.height*imgScale);
+  if(lastWidth!=window.innerWidth||lastHeight!=window.innerHeight){
+    update();
+  }
+  var img=0;
+  var imgScale = window.innerWidth/3000;
+  switch(currentImage){
+    case 1: img = image1; break;
+    case 2: img = image2; break;
+    case 3: img = image3; break;
+    case 4: img = image4; break;
+  }
+  image(img, 0.485*width, 0.35*height, img.width*imgScale, img.height*imgScale);
 }
 
 function mousePressed(){
@@ -51,21 +51,21 @@ function update(){
   lastHeight=window.innerHeight;
   canvas = createCanvas(window.innerWidth, window.innerHeight);
   background(bgcolor);
-canvas.parent('sketch-holder2');
+  canvas.parent('sketch-holder2');
 
 }
 function keyPressed(){
   switch(key){
-    case "1": efill=color(198, 60, 17); break;
-    case "2": efill=color(40, 12, 3); break;
-    case "3": efill=color(12, 38, 19); break;
-    case "4": efill=color(11, 30, 38); break;
-    case "5": efill=color(20, 29, 33); break;
-    case "6": efill=color(43, 28, 28); break;
-    case "7": efill=color(13, 7, 17); break;
-    case "8": efill=color(14, 33, 31); break;
-    case "9": efill=color(13, 22, 21); break;
-    case "0": efill=color(0); break;
+    case "1": efill=color(227, 242, 240); break;
+    case "2": efill=color(166, 193, 191);  break;
+    case "3": efill=color(101, 122, 120); break;
+    case "4": efill=color(13, 40, 38); break;
+    case "5": efill=color(5, 15, 14); break;
+    case "6": efill=color(193, 176, 166); break;
+    case "7": efill=color(173, 148, 133); break;
+    case "8": efill=color(114, 88, 72); break;
+    case "9": efill=color(81, 58, 44); break;
+    case "0": efill=color(53, 36, 26); break;
 
   }
 

@@ -5,44 +5,44 @@
 
 
 var drum={ //noise drum
-// declare type of synth, and type of filter
-synthType: 'white',
-filtAtt: "BP",
-// same basic parameters as syn1
-attackLevel: 1.2,
-releaseLevel: 0,
-attackTime: 0.001,
-decayTime: 0.05,
-susPercent: 0.7,
-releaseTime: 0.001,
-env: 0,
-thisSynth: 0,
-filter: 0,
-fFreq: 400,
-// values used to constrain random filter frequency
-filterMin: 1000,
-filterMax: 4500,
-// a parameter to trigger drums on and off
-playing: true,
-// parameters for trigger timing
-trig: 0,
-nextTrig: 200,
-// drums "on" duration
-trigOn: 400,
-// drums "off" duration
-trigOff: 80,
-// state no delay
-delayFX: false,
-playing:false,
-playedThru:0,
-sections:[0],
-thisSection:0,
+  // declare type of synth, and type of filter
+  synthType: 'white',
+  filtAtt: "BP",
+  // same basic parameters as syn1
+  attackLevel: 1.2,
+  releaseLevel: 0,
+  attackTime: 0.001,
+  decayTime: 0.05,
+  susPercent: 0.7,
+  releaseTime: 0.001,
+  env: 0,
+  thisSynth: 0,
+  filter: 0,
+  fFreq: 400,
+  // values used to constrain random filter frequency
+  filterMin: 1000,
+  filterMax: 4500,
+  // a parameter to trigger drums on and off
+  playing: true,
+  // parameters for trigger timing
+  trig: 0,
+  nextTrig: 200,
+  // drums "on" duration
+  trigOn: 400,
+  // drums "off" duration
+  trigOff: 80,
+  // state no delay
+  delayFX: false,
+  playing:false,
+  playedThru:0,
+  sections:[0],
+  thisSection:0,
 }
 
 
 var time=0;
 
-  var beat= 40;
+var beat= 40;
 
 var strongbeatdivision=2;
 var strongsubdivision=2;
@@ -87,10 +87,10 @@ var canvas;
 
 function setup(){
   console.log("yoooo")
-canvas=  createCanvas(window.innerWidth, window.innerHeight);
+  canvas=  createCanvas(window.innerWidth, window.innerHeight);
 
-background(bgcolor);
-noStroke();
+  background(bgcolor);
+  noStroke();
   frameRate(40);
 
   setupInstruments();
@@ -111,7 +111,7 @@ function setupInstruments(){
 
 function draw(){
 
-if(lastWidth!=window.innerWidth||lastHeight!=window.innerHeight){update();}
+  if(lastWidth!=window.innerWidth||lastHeight!=window.innerHeight){update();}
   handleMusic();
 
 }
@@ -131,26 +131,28 @@ function handleMusic(){
 
 function handleDrums(){
 
-var weight = salience(time);
+  var weight = salience(time);
 
 
-noiseSeed(section);
-var stimulus = noise(time*noiseInc)*stimulusScale;
-if(stimulus+weight>thresh&&weight!=0){
-  var loudness = map(stimulus+weight, 0, stimulusScale+maxWeight, 0, maxloudness);
-  console.log("stimulus: "+stimulus);
-  drum.filter.freq( 18150-loudness*18000);
-  drum.env.setADSR(drum.attackTime, drum.decayTime, 0.8*loudness, drum.releaseTime);
-  drum.env.setRange(loudness, drum.releaseLevel);
-  drum.env.play();
-}
-
-if(phrase>=phrasepersection){
-  section+=1;
-  phrase=0;
-  console.log("section :"+section);
   noiseSeed(section);
-}
+  var stimulus = noise(time*noiseInc)*stimulusScale;
+  if(stimulus+weight>thresh&&weight!=0){
+    var loudness = map(stimulus+weight, 0, stimulusScale+maxWeight, 0, 2);
+    loudness = constrain(loudness, 0, 1);
+    console.log("stimulus: "+stimulus);
+    console.log("loudness: "+loudness);
+    drum.filter.freq( 18150-loudness*18000 );
+    drum.env.setADSR(drum.attackTime, drum.decayTime, 0.8*loudness, drum.releaseTime);
+    drum.env.setRange(loudness, drum.releaseLevel);
+    drum.env.play();
+  }
+
+  if(phrase>=phrasepersection){
+    section+=1;
+    phrase=0;
+    console.log("section :"+section);
+    noiseSeed(section);
+  }
   var xscale=4.6;
   var w=xscale/2.3*divperbar*beat;
   var x=0.535  *width;
@@ -168,10 +170,10 @@ if(phrase>=phrasepersection){
     stroke(185);
     line(x, y-thresh*yscale, x+w, y-thresh*yscale);
     line(x, y, x+w, y);
-  for (var j=0; j<w/beat+1; j++){
-    line(x+j*beat, y, x+j*beat, y+h*yscale/4);
-}
-line(x+time*2, y, x+time*2, y+h*yscale/4);
+    for (var j=0; j<w/beat+1; j++){
+      line(x+j*beat, y, x+j*beat, y+h*yscale/4);
+    }
+    line(x+time*2, y, x+time*2, y+h*yscale/4);
     strokeWeight(2);
     stroke(25, 25, 225);
     if(i!=0){
@@ -245,20 +247,20 @@ function loadAnInstrument(synx){
     // if the filter attribute says BP load a band pass filter
     synx.filter= new p5.BandPass();
   }
-   // if the filter attribute says LP load a low pass filter
+  // if the filter attribute says LP load a low pass filter
   if(synx.filtAtt==="LP"){
     synx.filter=new p5.HighPass();
   }
   // set initial filter frequency
   synx.filter.freq(synx.fFreq);
- // now load the type of oscillator used. syn3 is the only one which uses
- // something else than the standard oscillator, so this exception is dealt with first:
- // if the synth type is "pink" then we have a noise synth.
+  // now load the type of oscillator used. syn3 is the only one which uses
+  // something else than the standard oscillator, so this exception is dealt with first:
+  // if the synth type is "pink" then we have a noise synth.
   if(synx.synthType==='pink'||synx.synthType==='white'){
     synx.thisSynth=new p5.Noise(synx.synthType);
     // if anything else (square or sine) then we have an oscillator
   } else {
-  synx.thisSynth=new p5.Oscillator(synx.synthType);
+    synx.thisSynth=new p5.Oscillator(synx.synthType);
   }
   // plug-in the amp, which will be monitored using the envelope (env) object
   synx.thisSynth.amp(synx.env);
@@ -294,21 +296,21 @@ function update(){
   lastHeight=window.innerHeight;
   canvas = createCanvas(window.innerWidth, window.innerHeight);
   background(bgcolor);
-canvas.parent('sketch-holder');
+  canvas.parent('sketch-holder');
 
 }
 function keyPressed(){
   switch(key){
-    case "1": efill=color(198, 60, 17); break;
-    case "2": efill=color(40, 12, 3); break;
-    case "3": efill=color(12, 38, 19); break;
-    case "4": efill=color(11, 30, 38); break;
-    case "5": efill=color(20, 29, 33); break;
-    case "6": efill=color(43, 28, 28); break;
-    case "7": efill=color(13, 7, 17); break;
-    case "8": efill=color(14, 33, 31); break;
-    case "9": efill=color(13, 22, 21); break;
-    case "0": efill=color(0); break;
+    case "1": efill=color(227, 242, 240); break;
+    case "2": efill=color(166, 193, 191);  break;
+    case "3": efill=color(101, 122, 120); break;
+    case "4": efill=color(13, 40, 38); break;
+    case "5": efill=color(5, 15, 14); break;
+    case "6": efill=color(193, 176, 166); break;
+    case "7": efill=color(173, 148, 133); break;
+    case "8": efill=color(114, 88, 72); break;
+    case "9": efill=color(81, 58, 44); break;
+    case "0": efill=color(53, 36, 26); break;
 
   }
 }
