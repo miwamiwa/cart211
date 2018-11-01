@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css?family=Orbitron|Rye');
+
+/* CSS Document */
+*{
+
+box-sizing:border-box; /* width includes padding */
+
+
+  /**/
+/* setting font size for everything means any font size mentionned after will be inherited (thus will not appear any different) */
+/* font-size:15px; */
+
+}
+html, body{
+	height:100%;
+
+}
+
+body{
+	margin:0;
+	font-family: Arial;
+	font-size:20px;
+
+}
+#thevideo{
+	position:fixed;
+	right:0;
+	bottom:0;
+	min-width:100%;
+	min-height:100%;
+}
+
+.content{
+	position:fixed;
+	bottom:0;
+	background: rgba(0, 0, 0, 0.5);
+	/*
+	rather than background:black; and opacity: 0.5;
+	if you doit that way pal the opacity will be inherited by text
+	*/
+	width:100%;
+	margin:0;
+	padding:20px;
+	color:white;
+	z-index:99;
+	transition: all 0.3s;
+}
+.content:hover {
+	background:rgba(250, 0, 0, 0.5);
+}
+#myBtn{
+	width:200px;
+	font-size:15px;
+	padding:10px;
+	border:none;
+	background:black;
+	color:white;
+	cursor:pointer;
+	transition:all 0.5s;
+}
+#myBtn:hover {
+	background:yellow;
+	color:black;
+}
