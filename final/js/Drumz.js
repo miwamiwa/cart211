@@ -1,3 +1,20 @@
+/*
+
+Drumzs.js
+This is what the three synths in the bgm are made of.
+
+this script handles:
+- creating a Synth object
+- setting the envelope
+- setting the filter
+- setting the delay effect
+- setting the notes to be played
+- putting the oscillator, envelope, filter and delay together and starting the sound
+- playing this synth's list of notes
+
+Envelope, filter, delay settings and note lists are declared in the main script.
+
+*/
 
 // starting key midi value
 var rootNote=60;
@@ -8,7 +25,7 @@ var rootNote=60;
 // everything is set to 0. Parameters are assigned in the functions that follow.
 // required argument: oscillator type (square, sine, triangle)
 
-function Drum(oscType){
+function Drumz(oscType){
   // declare type of synth; and type of filter
   this.synthType= oscType;
   this.filtAtt= "LP";
@@ -25,7 +42,6 @@ function Drum(oscType){
   this.thisSynth=0;
   this.filter=0;
   this.delay=0;
-  this.note=0;
   // filter frequency
   this.fFreq=0;
   // delay parameters
@@ -33,7 +49,6 @@ function Drum(oscType){
   this.delayLength=0;
   this.delayFB= 0;
   this.delayFilter= 0;
-  this.noteIndex=0;
 
     this.beat=40;
 
@@ -84,6 +99,7 @@ setfilterfreqrange()
     this.noiseInc = 0.11;
     this.maxloudness=2;
 
+
 }
 
 //////////////// ASSIGN SETTINGS ////////////////
@@ -93,7 +109,7 @@ setfilterfreqrange()
 // creates the amplitude envelope for this synth's notes.
 // required arguments: time and gain (level) settings for the different parts of the envelope.
 
-Drum.prototype.setEnvelope = function(attackTime, decayTime, releaseTime, attackLevel, susLevel, releaseLevel){
+Drumz.prototype.setEnvelope = function(attackTime, decayTime, releaseTime, attackLevel, susLevel, releaseLevel){
   // assign parameters with values provided.
   this.attackLevel= attackLevel;
   this.releaseLevel= releaseLevel;
@@ -107,7 +123,7 @@ Drum.prototype.setEnvelope = function(attackTime, decayTime, releaseTime, attack
 //
 // sets the filter type and frequency
 
-Drum.prototype.setFilter = function(filterType, frequency){
+Drumz.prototype.setFilter = function(filterType, frequency){
   // assign parameters with values provided.
   this.fFreq=frequency;
   this.filtAtt= filterType;
@@ -118,7 +134,7 @@ Drum.prototype.setFilter = function(filterType, frequency){
 // switches delay on or off,
 // sets the delay effect up
 
-Drum.prototype.setDelay = function(delayIsOn, length, feedback, filterFrequency){
+Drumz.prototype.setDelay = function(delayIsOn, length, feedback, filterFrequency){
   // toggle delay on or off
   this.delayFX= delayIsOn;
   // assign parameters with values provided
@@ -126,7 +142,7 @@ Drum.prototype.setDelay = function(delayIsOn, length, feedback, filterFrequency)
   this.delayFB= feedback;
   this.delayFilter= filterFrequency;
 }
- Drum.prototype.setDivisions = function(bar, beat, subdiv, finediv, beatsperbar, divsperbeat, fineperdiv){
+ Drumz.prototype.setDivisions = function(bar, beat, subdiv, finediv, beatsperbar, divsperbeat, fineperdiv){
    this.bar = bar;
    this.beat = beat;
    this.subdiv = subdiv;
@@ -135,7 +151,7 @@ Drum.prototype.setDelay = function(delayIsOn, length, feedback, filterFrequency)
    this.divperbeat = divsperbeat;
    this.divpersub = fineperdiv;
  }
-Drum.prototype.setWeights = function(maxWeight, stimScale, threshold, barweight, beatweight, subweight, fineweight){
+Drumz.prototype.setWeights = function(maxWeight, stimScale, threshold, barweight, beatweight, subweight, fineweight){
   this.maxWeight = maxWeight;
   this.stimulusScale = stimScale;
   this.thresh = threshold;
@@ -155,7 +171,7 @@ Drum.prototype.setWeights = function(maxWeight, stimScale, threshold, barweight,
 // it starts the sound
 // should be called in main script after having called the settings functions
 
-Drum.prototype.loadInstrument = function(){
+Drumz.prototype.loadInstrument = function(){
   // load envelope
   this.env=new p5.Env();
   // setup envelope parameters
@@ -201,7 +217,8 @@ Drum.prototype.loadInstrument = function(){
   }
 }
 
-Drum.prototype.handleDrums = function(){
+Drumz.prototype.handleDrums = function(){
+
   if(this.isPlaying){
   if(musicInc%this.bar*this.barperphrase){
     this.phrase+=1;
@@ -211,18 +228,17 @@ Drum.prototype.handleDrums = function(){
     this.phrase=0;
     console.log("section :"+this.section);
 
-    noiseSeed(this.section);
   }
-
+noiseSeed(520);
   var weight =  this.salience(musicInc);
 
   // uncomment this to get the same drum line every time
   //noiseSeed(this.section);
 
+
   var thisnoise = noise(musicInc*this.noiseInc);
   var stimulus = thisnoise*this.stimulusScale;
-console.log("stimulus 1"+stimulus);
-
+console.log("stimulus 2"+stimulus);
   if(stimulus+weight>this.thresh&&weight!=0){
 
     var loudness = map(stimulus+weight, 0, this.stimulusScale+this.maxWeight, 0, 1);
@@ -230,22 +246,17 @@ console.log("stimulus 1"+stimulus);
   //  console.log("stimulus: "+stimulus);
   //  console.log("loudness: "+loudness);
 
-    //this.filter.freq( 18150-loudness*18000 );
-
-    this.note = phrase.newNote();
-    var newNote =midiToFreq(constrain(this.note, 0, 127));
-    console.log("THE NEW NOTE IS : "+newNote);
-
-    this.thisSynth.freq(newNote);
+    this.filter.freq( 18150-loudness*18000 );
+    this.env.setADSR(this.attackTime, loudness*4*this.decayTime, this.susPercent, this.releaseTime);
+    this.env.setRange(this.attackLevel, this.releaseLevel);
     this.env.play();
-    this.noteIndex+=1;
   }
 
 }
 
 }
 
-Drum.prototype.salience = function(t){
+Drumz.prototype.salience = function(t){
 
   if(musicInc%this.beat===0){
     this.currentbeat+=1;
