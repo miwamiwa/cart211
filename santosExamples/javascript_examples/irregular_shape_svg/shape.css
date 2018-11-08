@@ -1,0 +1,30 @@
+@charset "UTF-8";
+/* CSS Document */
+
+#shape {
+	max-width: 500px;
+	
+}
+.cls-1{fill:#ff7bac;}
+.cls-2{fill:#ff1d25;}
+.cls-3{fill:#ff931e;}
+.cls-4{fill:#7ac943;}
+.cls-5{fill:#3fa9f5;}
+.cls-6{fill:#bdccd4;}
+
+.tri {transition:all .5s}
+.tri:hover {
+	fill: #757575;
+}
+
+
+section {
+	position: absolute;
+	top:20px;
+	right: 100px;
+	width:50%;
+	border: 1px solid red;
+	transition: all .5s;
+}
+
+

@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>flex and js example: function(this)</title>
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	html, body {
+		height: 100%;
+	}
+	main {
+/*		display: flex;*/
+		
+/*
+		flex-flow: row wrap;
+		justify-content: space-between;
+		align-items: flex-start;
+*/
+		
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		height: 100%;
+	}
+	div {
+		background: cadetblue;
+		flex: 1 22%;
+/*		height: 50px;*/
+		margin: 2%;
+		transition: all .5s;
+		cursor: pointer;
+	}
+	.animate {
+		background: #7E7C7C;
+		flex:1 44%;
+		height: 100px;
+	}
+	
+</style>
+</head>
+
+<body>
+	<main>
+		<div onclick="myAnim(this)"></div>
+		<div onclick="myAnim(this)"></div>
+		<div onclick="myAnim(this)"></div>
+		<div onclick="myAnim(this)"></div>
+		<div onclick="myAnim(this)"></div>
+		<div onclick="myAnim(this)"></div>
+		<div onclick="myAnim(this)"></div>
+		<div onclick="myAnim(this)"></div>
+		<div onclick="myAnim(this)"></div>
+		<div onclick="myAnim(this)"></div>
+		<div onclick="myAnim(this)"></div>
+	</main>
+	
+	<script>
+		function myAnim(x) {
+			x.classList.toggle("animate");
+		}
+	</script>
+</body>
+</html>

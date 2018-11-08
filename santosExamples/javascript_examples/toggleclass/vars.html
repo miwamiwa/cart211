@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>variables</title>
+</head>
+
+<body>
+	
+<button onclick="inc()">Increase</button>	
+<button onclick="dec()">Decrease</button>	
+
+<div id="displayTotal">total</div>
+
+<script>
+	//init vars
+	var total = 0;
+	//create a var so you dont have to write out long text everytime
+	var showPoints = document.getElementById("displayTotal");
+	showPoints.innerHTML = "The total is: " + total;
+	
+	function inc() {
+		total += 5; //inc by 5, total++ would inc by 1
+		showPoints.innerHTML = "The total is: " + total;
+	}
+	
+	function dec() {
+		total -= 5; //dec by 5, total-- would inc by 1
+		
+		//this "if" condition prevents the total from being less than 0
+		if(total <= 0){
+		  total = 0;
+		}
+		showPoints.innerHTML = "The total is: " + total;
+	}
+</script>
+
+</body>
+</html>

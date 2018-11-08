@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>js examples 1</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+	<main>
+		<section>
+			<h2>Hey, how's about you learn me some</h2>
+			<h1>Javascript</h1>
+			Name: <input type="text" id="myText" value="Mickey">
+
+			<p id="display">Click the button to change the value of the text field.</p>
+
+			<button onclick="myPassFunction()">Try it</button>
+		</section>
+	</main>
+	
+	<!--let's make sure this is at the bottom just before the closing body-->
+	<script>
+		var name;
+		function myPassFunction() {
+		   name = document.getElementById("myText").value;
+
+		   if (name == "Santo") {
+		   document.getElementById("display").innerHTML = "welcome " + name;
+			} else {
+		   document.getElementById("display").innerHTML = "get lost  " + name;
+			}
+
+		}
+	</script>
+		
+</body>
+</html>

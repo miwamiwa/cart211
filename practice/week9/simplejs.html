@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>simple js trigger</title>
+    <link rel="stylesheet" href="css/simplejs.css">
+  </head>
+  <body>
+    <button id="trigger" onclick="toggleShowHide()"> showww </button>
+
+    <article id="display_me">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+<span id="close" onclick="hideFunction()"> X </span>
+    </article>
+
+
+<!-- when referencing html elements in js, declare js at the bottom -->
+    <script type="text/javascript">
+
+    var displaythis = false;
+
+    function showFunction(){
+      document.getElementById("display_me").style.opacity = 1;
+    displaythis = true;
+    }
+
+    function hideFunction(){
+      document.getElementById("display_me").style.opacity = 0;
+      displaythis = false;
+    }
+    
+    function toggleShowHide(){
+       if(!displaythis){
+         showFunction()
+       }
+       else {
+         hideFunction()
+       }
+    }
+    </script>
+  </body>
+</html>

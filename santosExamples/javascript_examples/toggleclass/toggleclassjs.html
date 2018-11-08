@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>toggle class js</title>
+<style>
+	button {
+		display: block;
+		width:200px;
+	}
+	#myDiv {
+		display: inline-block;
+		cursor: pointer;
+		background-color:bisque;
+		padding: 1%;
+	}
+	.tranny {
+		transition: all .5s;
+	}
+	.mystyle {
+		width: 100%;
+		padding: 25px;
+		background-color: coral;
+		color:cornflowerblue;
+		font-size: 52px;
+		box-sizing: border-box;
+	}
+	
+/*	=== animated menu === */
+	.container {
+		display: inline-block;
+		cursor: pointer;
+	}
+
+	.bar1, .bar2, .bar3 {
+		width: 35px;
+		height: 5px;
+		background-color: #333;
+		margin: 6px 0;
+		transition: 0.4s;
+	}
+
+	.change .bar1 {
+		-webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
+		transform: rotate(-45deg) translate(-9px, 6px) ;
+	}
+
+	.change .bar2 {opacity: 0;}
+
+	.change .bar3 {
+		-webkit-transform: rotate(45deg) translate(-8px, -8px) ;
+		transform: rotate(45deg) translate(-8px, -8px) ;
+	}
+	</style>
+</head>
+
+<body>
+
+	<p>Click the "Try it" button to toggle between adding and removing the "mystyle" class name of the DIV element:</p>
+
+	<button onclick="myClassy()">Try it</button>
+	
+	<nav class="container" onclick="myAnim(this)">
+  		<div class="bar1"></div>
+ 	 	<div class="bar2"></div>
+  		<div class="bar3"></div>
+	</nav>
+
+	<section> 
+		<div id="myDiv" class="tranny"  onclick="myClassy()">
+			This is a DIV element.
+		</div>
+	</section>
+	
+	<script>
+		function myClassy() {
+		   var element = document.getElementById("myDiv");
+		   element.classList.toggle("mystyle");
+		}
+		function myAnim(x) {
+			x.classList.toggle("change");
+			myClassy();
+		}
+	</script>
+
+</body>
+</html>

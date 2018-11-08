@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>js examples 1</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+	
+	<main>
+		<section>
+			<h2>Hey, how's about you learn me some</h2>
+			<h1>Javascript</h1>
+			
+			Name: <input type="text" id="myText" placeholder="Mickey">
+			
+			<button onclick="myPassFunction()">Try it</button>
+
+			<p id="display">Click the button to change the value of the text field.</p>
+		</section>
+		
+	</main>
+	
+	
+	<script>
+		var name;
+		function myPassFunction(){
+			name = document.getElementById("myText").value;
+			//document.getElementById("display").innerHTML = "Welcome " + name + ", have fun on the site";
+			
+			if (name == "Jimmy") {
+					document.getElementById("display").innerHTML = "Welcome " + name + ", have fun on the site";
+				} else if( name == "Santo") {
+					document.getElementById("display").innerHTML = "Welcome " + name + ", you are a super king";	  
+				 } else {
+					document.getElementById("display").innerHTML = "Get lost " + name + ", go jump in a lake you freakin jerk";
+				}
+		}
+		
+	</script>
+</body>
+</html>
+
+
+
+
+
+

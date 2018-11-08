@@ -1,0 +1,172 @@
+@charset "UTF-8";
+/* CSS Document */
+@import url('https://fonts.googleapis.com/css?family=Great+Vibes|Oswald:700|Playfair+Display|Quicksand');
+
+/*
+font-family: 'Quicksand', sans-serif;
+font-family: 'Playfair Display', serif;
+font-family: 'Great Vibes', cursive;
+font-family: 'Oswald', sans-serif;
+*/
+* {
+	padding:0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+	background: url(../img/bg.jpg) no-repeat fixed center center;
+	background-size: cover;
+}
+
+main {
+	border: solid 20px white;
+	width:100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+/*	align-items: center;*/
+}
+
+section {
+	width: 70%;
+/*	border:1px solid white;*/
+	text-align: center;
+	margin-top: 5%;
+/*	padding:3% 1%;*/
+/*
+	position:relative;
+	top:10%;
+*/
+}
+
+h2 {
+	font-size: 2vmax;
+	font-family: 'Quicksand', sans-serif;
+	color: #333;
+}
+
+h1 {
+	font-size: 10vmax;
+	letter-spacing: -1vmin;
+	font-family: 'Oswald', sans-serif;
+	color: #fff;
+	text-transform: uppercase;
+	line-height: 10vmax;
+	text-shadow: 3px 3px 0px rgba(0,0,0,.5);
+}
+
+#showcase {
+	font-size: 3vmax;
+	font-family: 'Quicksand', sans-serif;
+	color: #333;
+	background: #fff;
+	padding: 10px 20px;
+	border-radius: 0 10px 10px 0;
+/*	text-shadow: 0px 0px 30px rgba(0,0,0,.7);*/
+	position: absolute;
+	left:0;
+	top:0;
+	transition: all .5s;
+}
+
+
+button {
+	padding:10px;
+	border-radius: 10px;
+	font-size: 1vmax;
+	font-family: 'Quicksand', sans-serif;
+	margin: 20px 0;
+	outline:none;
+	cursor: pointer;
+}
+
+button:hover  {
+	background: #333;
+	color: #fff;
+}
+
+#display_me {
+	width: 400px;
+	border-radius: 10px;
+	background: #fff;
+	padding: 20px;
+	font-size: 2vmin;
+	font-family: 'Quicksand', sans-serif;
+	color: #333;
+	position:absolute;
+	bottom:120px;
+	right:80px;
+	opacity: 0;
+	transition: all .5s;
+}
+
+#display_me h1 {
+	font-size: 3vmax;
+	letter-spacing: -0.5vmin;
+	font-family: 'Oswald', sans-serif;
+	color: #333;
+	text-transform: uppercase;
+	line-height: 3vmax;
+	margin-bottom: 4px;
+	text-shadow: 0px 0px 0px rgba(0,0,0,.5);
+}
+
+
+#close {
+	background: #333;
+	padding: 10px;
+	font-size: 18px;
+	font-family: 'Quicksand', sans-serif;
+	color: #fff;
+	position:absolute;
+	top:0px;
+	right: 0px;
+	cursor: pointer;
+/*	border:2px solid #333;*/
+}
+#close:hover {
+	background: #fff;
+	color: #333;
+}
+
+#trigger {
+	position:absolute;
+	bottom:40px;
+	right:80px;
+}
+
+
+
+
+
+
+
+/* === EX3 ==== */
+
+
+
+#display {
+	padding:  5px 20px;
+	font-size: 3vmin;
+	font-family: 'Quicksand', sans-serif;
+	color: #333;
+}
+
+input {
+	font-size: 3vmin;
+	font-family: 'Quicksand', sans-serif;
+	color: #333;
+	padding:  5px;
+}
+
+
+
+
+
+
+

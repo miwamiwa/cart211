@@ -1,0 +1,43 @@
+/* CSS Document */
+
+button{
+  padding:100px;
+  border-radius:20px;
+  font-size: 10vmax;
+  font-family: Arial;
+  margin: 20px 0;
+  outline: none;
+  cursor: pointer;
+  transition:all 0.3s;
+}
+
+button:hover{
+  background: #333;
+  color: #fff;
+}
+
+article{
+  width: 200px;
+}
+
+#display_me{
+  width:400px;
+	opacity:0;
+	transition: all .5s;
+	position:relative;
+  border-radius: 10px;
+  background: #333;
+  padding:20px;
+  font-size: 2vmin;
+  font-family: Arial;
+}
+
+#close{
+	background:#fff;
+	padding: 10px;
+	font-size:18px;
+	color:#eee;
+	position: absolute;
+	top: 0;
+	right:0;
+}
