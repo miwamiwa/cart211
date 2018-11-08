@@ -53,12 +53,15 @@ fill(red, gre, blu);
 ellipse(rx+width/2+i,ry+ height/2+zed*i, diam+zed*i, diam+zed*i);
 }
 
+// if frame ==maxx, shape is done drawing.
 if(frame==maxx){
 rx=round(random(-width/3,width/3));
 ry=round(random(-height/3,height/3));
 frame=0;
 maxx=round(random(2, maxinit));
 shape+=1;
+
+// pick new color
 a=random(0, 255);
 if(random()<0.5){
   b=255-a+random(-30, 30);

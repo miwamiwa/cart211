@@ -79,7 +79,7 @@ function launchPart0(){
   drums.setWeights(18, 30, 24, 1, 5, 5, 10);
   drums.isPlaying = true;
   drums2.setDivisions(120, 40, 10, 5, 3, 4, 2);
-  drums2.setWeights(30, 28, 20, 5, 15, 5, 2);
+  drums2.setWeights(30, 28, 20, 5, 15, 10, 2);
   drums2.isPlaying = true;
   newPhrase = true;
   musicInc = 0;
