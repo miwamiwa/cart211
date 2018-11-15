@@ -44,9 +44,9 @@ function Drum(oscType){
     this.divperbeat=2;
     this.divpersub=5;
 
-    this.barperphrase=1;
-    this.phrasepersection=1;
-    this.bar=80;
+    this.barperphrase=4;
+    this.phrasepersection=4;
+    this.bar=40;
     this.subdiv=20;
     this.finediv=4;
 
@@ -203,25 +203,37 @@ Drum.prototype.loadInstrument = function(){
 
 Drum.prototype.handleDrums = function(){
   if(this.isPlaying){
-  if(musicInc%this.bar*this.barperphrase){
+  if(musicInc%(this.bar*this.barperphrase)===0&&musicInc!=0){
     this.phrase+=1;
+    musicInc =0;
+    newPhrase=true;
+
+
+      console.log("grr")
+
   }
-  if(this.phrase%this.phrasepersection){
+  if(this.phrase>=this.phrasepersection){
     this.section+=1;
     this.phrase=0;
     console.log("section :"+this.section);
 
-    noiseSeed(this.section);
+    phrase = new Phrase(this.section);
+
+    console.log("eyo")
+
+
+
+
   }
 
   var weight =  this.salience(musicInc);
 
   // uncomment this to get the same drum line every time
   //noiseSeed(this.section);
-
+  noiseSeed(this.section);
   var thisnoise = noise(musicInc*this.noiseInc);
   var stimulus = thisnoise*this.stimulusScale;
-console.log("stimulus 1"+stimulus);
+//console.log("stimulus 1"+stimulus);
 
   if(stimulus+weight>this.thresh&&weight!=0){
 

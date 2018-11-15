@@ -1,4 +1,4 @@
-function Phrase(){
+function Phrase(noiseSeed){
   this.scale = new Scale();
   this.scaleNotes = this.scale.newKey;
   this.fullScaleNotes = concat(this.scaleNotes, concat(this.scaleNotes, concat(this.scaleNotes, this.scaleNotes)));
@@ -11,17 +11,24 @@ function Phrase(){
   this.leapWeight = 2;
   this.noiseRate = 1;
   this.noiseInc =0;
-  this.noiseSeed =50;
+  this.noiseSeed =noiseSeed;
   this.totalSeeds =5;
+
+this.rootNote = 40;
+
   this.currentIdeas = [1];
-  this.currentIdeasWeights = [4];
+  this.currentIdeasWeights = [10];
   //this.newIdeas = [2, 3, 4, 5, 6, 7];
   //this.newIdeasWeights = [6, 5, 4, 2, 2, 1];
   this.newIdeas = [2, 13];
   this.newIdeasWeights = [2, 3];
-  this.currentIdeaWeight = 1;
+
+  this.currentIdeaWeight = 5;
   this.newIdeaWeight =1;
   this.nextNote = 0;
+  this.distanceFromRoot =0;
+
+  this.maxDistance =12;
 }
 
 Phrase.prototype.newNote = function(index){
@@ -40,11 +47,12 @@ this.intervals.push(intervalVector);
 checkForEmpties(this.intervals);
 
 //
-this.nextNote = 20+arraySum(this.fullScaleNotes, this.lastNote);
+this.nextNote = this.rootNote+arraySum(this.fullScaleNotes, this.lastNote);
 
 this.lastNote = this.lastNote+intervalVector;
+this.distanceFromRoot += intervalVector;
 this.notes.push(this.nextNote);
-console.log("notes :"+this.notes);
+//console.log("notes :"+this.notes);
 this.noiseInc += this.noiseRate;
 return this.nextNote;
 }
@@ -159,11 +167,11 @@ Phrase.prototype.whichNewIdea = function(){
 }
 
 Phrase.prototype.whichDirection = function(){
-  if(this.nextNote<32){
-    this.directionWeights = [0, 1, 2];
-  }
-  else if (this.nextNote>100){
+  if(this.distanceFromRoot>this.maxDistance){
     this.directionWeights = [2, 1, 0];
+  }
+  else if (this.distanceFromRoot<-this.maxDistance){
+    this.directionWeights = [0, 1, 2];
   }
   else{
   this.directionWeights = [2, 1, 2];

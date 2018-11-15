@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Parralax Example w/ Rellax.js</title>
+	<link rel="stylesheet" href="css/parallax.css">
+</head>
+
+<body>
+	<div class="object1"></div>
+	<div class="object2"></div>
+	<div class="object3"></div>
+	<div class="object4"></div>
+	<div class="object5"></div>
+	<div class="object6"></div>
+	
+	<div class="thing1 rellax" data-rellax-speed="2">A</div>
+	<div class="thing2 rellax" data-rellax-speed="8">B</div>
+	<div class="thing3 rellax" data-rellax-speed="10">C</div>
+	<div class="thing4 rellax" data-rellax-speed="5">D</div>
+	<div class="thing5 rellax" data-rellax-speed="4">E</div>
+	<div class="thing6 rellax" data-rellax-speed="10">F</div>
+	<div class="thing7 rellax" data-rellax-speed="-1">G</div>
+	<div class="thing8 rellax" data-rellax-speed="3">H</div>
+	
+	<!-- Scripts -->
+	<script src="js/rellax.js"></script>
+	<script>
+		var rellax = new Rellax('.rellax', {center: true});
+	</script>
+	
+</body>
+</html>

@@ -22,12 +22,19 @@ var musicInc = 0;
 var musicSpeed = 1;
 var newPhrase = false;
 
+var canvas;
+
+
+var pos=[6];
+
 
 function setup(){
-  createCanvas(200, 200);
+
+  canvas = createCanvas(0, 0);
+  //canvas.parent('sketch-holder');
+  background(0);
   console.log("generating");
   phrase = new Phrase();
-
   drums = new Drum('square');
   drums2 = new Drumz('white');
   setupInstruments();
@@ -36,12 +43,19 @@ function setup(){
 
 function draw(){
 playSound();
+updateTime();
+
+console.log("section hovered: "+currentlyHovered);
+
+/*
 
 if(musicInc%60===0&&generating){
 console.log("frame = "+frame);
 phrase.newNote(frame);
 frame+=1;
 }
+
+*/
 }
 
 function playSound(){
@@ -75,7 +89,7 @@ function setupInstruments(){
   drums2.loadInstrument();
 }
 function launchPart0(){
-  drums.setDivisions(240, 120, 40, 20, 2, 3, 2);
+  drums.setDivisions(40, 120, 40, 20, 2, 3, 2);
   drums.setWeights(18, 30, 24, 1, 5, 5, 10);
   drums.isPlaying = true;
   drums2.setDivisions(120, 40, 10, 5, 3, 4, 2);
@@ -149,4 +163,22 @@ function checkForEmpties(array){
       array = removeItem(this.array, i);
     }
 }
+}
+
+function mouseWheel(event) {
+
+if(currentlyHovered!=0){
+  print(event.delta);
+  //move the square according to the vertical scroll amount
+  currentT[currentlyHovered-1] += event.delta/abs(event.delta);
+  tellTime();
+}
+
+
+
+
+
+  console.log("POSPOSPOS"+pos);
+  //uncomment to block page scrolling
+  //return false;
 }

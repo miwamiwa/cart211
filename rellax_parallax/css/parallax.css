@@ -1,0 +1,126 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background:#fff;
+	font-family:oswald, "sans-serif";
+	color:#333;
+	font-size: 300px;
+	overflow-x:hidden;
+}
+
+.object1 {
+	width:300px;
+	height:300px;
+	position:absolute;
+	top:5%;
+	left:24%;
+	background:#333;
+	border-radius:50%;
+}
+
+.object2 {
+	width:200px;
+	height:200px;
+	position:absolute;
+	top:105%;
+	left:66%;
+	background:tomato;
+	border-radius:50%;
+}
+
+.object3 {
+	width:500px;
+	height:500px;
+	position:absolute;
+	top:136%;
+	left:28%;
+	background:cadetblue;
+	border-radius:50%;
+}
+
+.object4 {
+	width:350px;
+	height:350px;
+	position:absolute;
+	top:30%;
+	left:45%;
+	background:crimson;
+	border-radius:50%;
+}
+
+.object5 {
+	width:150px;
+	height:150px;
+	position:absolute;
+	top:100%;
+	left:45%;
+	background:deeppink;
+	border-radius:50%;
+}
+
+.object6 {
+	width:650px;
+	height:650px;
+	position:absolute;
+	top:250%;
+	left:35%;
+	background:forestgreen;
+	border-radius:50%;
+}
+
+.thing1 {
+	position: absolute;
+	top: 0;
+	left:5%;
+}
+
+.thing2 {
+	position: absolute;
+	top: 40%;
+	left:50%;
+}
+
+
+.thing3 {
+	position: absolute;
+	top: 70%;
+	left:23%;
+}
+
+.thing4 {
+	position: absolute;
+	top: 80%;
+	left:80%;
+}
+
+.thing5 {
+	position: absolute;
+	top: 225%;
+	left:60%;
+}
+
+.thing6 {
+	position: absolute;
+	top: 130%;
+	left:20%;
+}
+
+.thing7 {
+	position: absolute;
+	top: 220%;
+	left:15%;
+}
+
+.thing8 {
+	position: absolute;
+	top: 250%;
+	left:30%;
+}
+
+
+
+

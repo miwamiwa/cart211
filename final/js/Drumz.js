@@ -238,7 +238,7 @@ noiseSeed(520);
 
   var thisnoise = noise(musicInc*this.noiseInc);
   var stimulus = thisnoise*this.stimulusScale;
-console.log("stimulus 2"+stimulus);
+//console.log("stimulus 2"+stimulus);
   if(stimulus+weight>this.thresh&&weight!=0){
 
     var loudness = map(stimulus+weight, 0, this.stimulusScale+this.maxWeight, 0, 1);
