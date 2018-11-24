@@ -2,12 +2,6 @@
 // starting key midi value
 var rootNote=60;
 
-// Synth(oscType)
-//
-// creates a synth object.
-// everything is set to 0. Parameters are assigned in the functions that follow.
-// required argument: oscillator type (square, sine, triangle)
-
 function Drum(oscType){
   // declare type of synth; and type of filter
   this.synthType= oscType;
@@ -34,55 +28,37 @@ function Drum(oscType){
   this.delayFB= 0;
   this.delayFilter= 0;
   this.noteIndex=0;
+  this.beat=40;
+  this.strongbeatdivision=2;
+  this.strongsubdivision=2;
+  this.divperbar=2;
+  this.divperbeat=2;
+  this.divpersub=5;
+  this.barperphrase=4;
+  this.phrasepersection=4;
+  this.bar=40;
+  this.subdiv=20;
+  this.finediv=4;
 
-    this.beat=40;
+  this.barweight=0;
+  this.beatweight=0;
+  this.subweight=0;
+  this.fineweight=0;
 
-    this.strongbeatdivision=2;
-    this.strongsubdivision=2;
+  this.strongbeatweight=0;
+  this.strongsubweight=0;
 
-    this.divperbar=2;
-    this.divperbeat=2;
-    this.divpersub=5;
+  this.phrase=0;
+  this.section=0;
+  this.currentbeat=0;
+  this.currentsub=0;
 
-    this.barperphrase=4;
-    this.phrasepersection=4;
-    this.bar=40;
-    this.subdiv=20;
-    this.finediv=4;
+  this.maxWeight= 0;
+  this.stimulusScale= 0;
+  this.thresh= 0;
 
-//    bar=this.beat*this.divperbar;
-//    subdiv=this.beat/this.divperbeat;
-//    finediv=this.subdiv/this.divpersub;
-
-/*
-this could use some functions to set parameters. that way we can have different drums going.
-setweights()
-setbarbeatdivlength()
-sethresh and stimulusscale()
-setfilterfreqrange()
-
-*/
-    this.barweight=0;
-    this.beatweight=0;
-    this.subweight=0;
-    this.fineweight=0;
-
-    this.strongbeatweight=0;
-    this.strongsubweight=0;
-
-    this.phrase=0;
-    this.section=0;
-    this.currentbeat=0;
-    this.currentsub=0;
-
-    this.maxWeight= 0;
-    this.stimulusScale= 0;
-    this.thresh= 0;
-//    maxWeight=this.barweight+this.beatweight+this.subweight+this.fineweight+this.strongbeatweight+this.strongsubweight;
-//    stimulusScale=1.5*this.maxWeight;
-//    thresh=0.25*(this.maxWeight+this.stimulusScale);
-    this.noiseInc = 0.11;
-    this.maxloudness=2;
+  this.noiseInc = 0.11;
+  this.maxloudness=2;
 
 }
 
@@ -126,15 +102,15 @@ Drum.prototype.setDelay = function(delayIsOn, length, feedback, filterFrequency)
   this.delayFB= feedback;
   this.delayFilter= filterFrequency;
 }
- Drum.prototype.setDivisions = function(bar, beat, subdiv, finediv, beatsperbar, divsperbeat, fineperdiv){
-   this.bar = bar;
-   this.beat = beat;
-   this.subdiv = subdiv;
-   this.finediv = finediv;
-   this.divperbar = beatsperbar;
-   this.divperbeat = divsperbeat;
-   this.divpersub = fineperdiv;
- }
+Drum.prototype.setDivisions = function(bar, beat, subdiv, finediv, beatsperbar, divsperbeat, fineperdiv){
+  this.bar = bar;
+  this.beat = beat;
+  this.subdiv = subdiv;
+  this.finediv = finediv;
+  this.divperbar = beatsperbar;
+  this.divperbeat = divsperbeat;
+  this.divpersub = fineperdiv;
+}
 Drum.prototype.setWeights = function(maxWeight, stimScale, threshold, barweight, beatweight, subweight, fineweight){
   this.maxWeight = maxWeight;
   this.stimulusScale = stimScale;
@@ -201,59 +177,66 @@ Drum.prototype.loadInstrument = function(){
   }
 }
 
+// handleDrums()
+//
+// looped in draw(). handles playing this synth's sound.
+
 Drum.prototype.handleDrums = function(){
+
+  // if this instrument is turned on
   if(this.isPlaying){
-  if(musicInc%(this.bar*this.barperphrase)===0&&musicInc!=0){
-    this.phrase+=1;
-    musicInc =0;
-    newPhrase=true;
+
+    // if current frame is a multiple of phrase length
+    if(musicInc%(this.bar*this.barperphrase)===0 && musicInc!=0){
+      // count frases
+      this.phrase+=1;
+      // reset time
+      // musicInc =0;
+      // newPhrase=true;
+    }
+
+    if(this.phrase>=this.phrasepersection){
+      this.section+=1;
+      this.phrase=0;
+      console.log("section :"+this.section);
+
+      phrase = new Phrase(this.section);
+
+      console.log("eyo")
 
 
-      console.log("grr")
+
+
+    }
+
+    var weight =  this.salience(musicInc);
+
+    // uncomment this to get the same drum line every time
+    //noiseSeed(this.section);
+    noiseSeed(this.section);
+    var thisnoise = noise(musicInc*this.noiseInc);
+    var stimulus = thisnoise*this.stimulusScale;
+    //console.log("stimulus 1"+stimulus);
+
+    if(stimulus+weight>this.thresh&&weight!=0){
+
+      var loudness = map(stimulus+weight, 0, this.stimulusScale+this.maxWeight, 0, 1);
+      loudness = constrain(loudness, 0, 1);
+      //  console.log("stimulus: "+stimulus);
+      //  console.log("loudness: "+loudness);
+
+      //this.filter.freq( 18150-loudness*18000 );
+
+      this.note = phrase.newNote();
+      var newNote =midiToFreq(constrain(this.note, 0, 127));
+      console.log("THE NEW NOTE IS : "+newNote);
+
+      this.thisSynth.freq(newNote);
+      this.env.play();
+      this.noteIndex+=1;
+    }
 
   }
-  if(this.phrase>=this.phrasepersection){
-    this.section+=1;
-    this.phrase=0;
-    console.log("section :"+this.section);
-
-    phrase = new Phrase(this.section);
-
-    console.log("eyo")
-
-
-
-
-  }
-
-  var weight =  this.salience(musicInc);
-
-  // uncomment this to get the same drum line every time
-  //noiseSeed(this.section);
-  noiseSeed(this.section);
-  var thisnoise = noise(musicInc*this.noiseInc);
-  var stimulus = thisnoise*this.stimulusScale;
-//console.log("stimulus 1"+stimulus);
-
-  if(stimulus+weight>this.thresh&&weight!=0){
-
-    var loudness = map(stimulus+weight, 0, this.stimulusScale+this.maxWeight, 0, 1);
-    loudness = constrain(loudness, 0, 1);
-  //  console.log("stimulus: "+stimulus);
-  //  console.log("loudness: "+loudness);
-
-    //this.filter.freq( 18150-loudness*18000 );
-
-    this.note = phrase.newNote();
-    var newNote =midiToFreq(constrain(this.note, 0, 127));
-    console.log("THE NEW NOTE IS : "+newNote);
-
-    this.thisSynth.freq(newNote);
-    this.env.play();
-    this.noteIndex+=1;
-  }
-
-}
 
 }
 
