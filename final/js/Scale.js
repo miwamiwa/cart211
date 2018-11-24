@@ -20,7 +20,7 @@ function Scale(){
   this.stopGenerating = false;
   this.newKeyOctaveSpan = 0;
 
-    console.log("new newKey");
+  //  console.log("new newKey");
     noiseSeed(this.kNoiseSeed);
 
   while(!this.stopGenerating){
@@ -34,7 +34,7 @@ function Scale(){
     this.noiseResult = noise(this.kNoiseInc);
     this.noiseSec = 1/this.possibleIntervals;
 
-    console.log("noiseResult: "+this.noiseResult);
+    //console.log("noiseResult: "+this.noiseResult);
 
     // the following for() loop makes a choice using noiseResult
     for (var i=0; i< this.possibleIntervals; i++){
@@ -55,7 +55,7 @@ function Scale(){
     }
   }
   // print results
-  console.log("newKeyOctaveSpan :"+this.newKeyOctaveSpan);
-  console.log("newKey: ")
-  console.log(this.newKey);
+//  console.log("newKeyOctaveSpan :"+this.newKeyOctaveSpan);
+//  console.log("newKey: ")
+//  console.log(this.newKey);
 }

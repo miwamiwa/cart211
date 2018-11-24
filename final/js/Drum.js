@@ -198,14 +198,9 @@ Drum.prototype.handleDrums = function(){
     if(this.phrase>=this.phrasepersection){
       this.section+=1;
       this.phrase=0;
-      console.log("section :"+this.section);
+
 
       phrase = new Phrase(this.section);
-
-      console.log("eyo")
-
-
-
 
     }
 
@@ -229,7 +224,7 @@ Drum.prototype.handleDrums = function(){
 
       this.note = phrase.newNote();
       var newNote =midiToFreq(constrain(this.note, 0, 127));
-      console.log("THE NEW NOTE IS : "+newNote);
+    //  console.log("THE NEW NOTE IS : "+newNote);
 
       this.thisSynth.freq(newNote);
       this.env.play();

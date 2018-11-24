@@ -25,6 +25,9 @@ var newPhrase = false;
 var canvas;
 
 
+var sectionLength = 300;
+
+
 var pos=[6];
 
 // setup()
@@ -68,14 +71,15 @@ function playSound(){
 
   // increment time (frames)
   if(!newPhrase){
-    musicInc+=musicSpeed;
+   musicInc+=musicSpeed;
+  //  console.log("musicInc: "+musicInc)
   } else {
     newPhrase=false;
   }
 
   // play each synth
-  drums.handleDrums();
-  drums2.handleDrums();
+//  drums.handleDrums();
+//  drums2.handleDrums();
 
 }
 
@@ -204,6 +208,8 @@ function mouseWheel(event) {
 
     // scroll clock element value up or down
     currentT[currentlyHovered-1] += event.delta/abs(event.delta);
+    // update musicInc
+    musicInc = framesSinceStart().totalFrames;
     // update clock text
     tellTime();
 

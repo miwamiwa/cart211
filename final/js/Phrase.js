@@ -37,7 +37,7 @@ Phrase.prototype.newNote = function(index){
   this.directions.push(chosenDirection);
 
   var chosenInterval =0;
-console.log("picking new interval");
+//console.log("picking new interval");
 chosenInterval = this.whichInterval();
 var intervalVector = chosenInterval*chosenDirection;
 this.intervals.push(intervalVector);
@@ -87,7 +87,7 @@ Phrase.prototype.leapOrStep = function(){
 
     choice = "leap";
   }
-  console.log("motion by: "+choice);
+  //console.log("motion by: "+choice);
   return choice;
 }
 
@@ -106,7 +106,7 @@ if(stim<this.currentIdeaWeight*portion||this.newIdeas.length===0){
 
   choice = this.whichNewIdea();
 }
-console.log("interval chosen: "+choice);
+//console.log("interval chosen: "+choice);
 return choice;
 }
 
@@ -130,16 +130,16 @@ Phrase.prototype.whichCurrentIdea = function(){
   }
   var result = this.currentIdeas[choice];
   this.newIdeaWeight += 1;
-  console.log("interval will be a currently known idea");
-  console.log("current ideas: "+this.currentIdeas);
-  console.log("current idea choice index: "+choice);
-  console.log("chosen current idea: "+result);
+//  console.log("interval will be a currently known idea");
+//  console.log("current ideas: "+this.currentIdeas);
+//  console.log("current idea choice index: "+choice);
+//  console.log("chosen current idea: "+result);
   return result;
 }
 
 Phrase.prototype.whichNewIdea = function(){
-  console.log("interval will be a new idea");
-  console.log("new ideas "+this.newIdeas);
+//  console.log("interval will be a new idea");
+//  console.log("new ideas "+this.newIdeas);
   noiseSeed(this.noiseSeed+2);
   var stim = noise(this.noiseInc);
   var stimDivision = this.newIdeas.length;
@@ -155,14 +155,14 @@ Phrase.prototype.whichNewIdea = function(){
   this.currentIdeaWeight+=2;
   var result = this.newIdeas[choice];
 
-  console.log("new idea choice index: "+choice);
-  console.log("chosen new idea: "+result);
+  //console.log("new idea choice index: "+choice);
+  //console.log("chosen new idea: "+result);
 
   this.newIdeasWeights = removeItem(this.newIdeasWeights, choice);
   this.newIdeas = removeItem(this.newIdeas, choice);
 
-  console.log("new new ideas: "+this.newIdeas);
-  console.log("new current ideas"+this.currentIdeas);
+  //console.log("new new ideas: "+this.newIdeas);
+  //console.log("new current ideas"+this.currentIdeas);
   return result;
 }
 
@@ -176,7 +176,7 @@ Phrase.prototype.whichDirection = function(){
   else{
   this.directionWeights = [2, 1, 2];
 }
-  console.log("chosing direction");
+  //console.log("chosing direction");
   noiseSeed(this.noiseSeed+3);
   var stim = noise(this.noiseInc);
   var stimDivision = arraySum(this.directionWeights, 0);
@@ -193,7 +193,7 @@ Phrase.prototype.whichDirection = function(){
     }
   }
   choice = map(choice, 0, 2, -1, 1);
-  console.log("direction chosen: "+choice);
+  //console.log("direction chosen: "+choice);
   return choice;
 
 }
