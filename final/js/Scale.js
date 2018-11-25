@@ -21,7 +21,7 @@ function Scale(){
   this.newKeyOctaveSpan = 0;
 
   //  console.log("new newKey");
-    noiseSeed(this.kNoiseSeed);
+    noiseSeed(random(1000));
 
   while(!this.stopGenerating){
 

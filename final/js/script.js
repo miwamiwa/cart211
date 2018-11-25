@@ -27,17 +27,25 @@ var canvas;
 
 var sectionLength = 300;
 
-
+var divwidth, divheight;
 var pos=[6];
+
+var   currentSection;
+var  framesSinceSection;
 
 // setup()
 //
 // creates p5.sound.js objects
 
 function setup(){
-
+  var thisdiv = document.getElementById('sketch-holder');
+  var divbox = thisdiv.getBoundingClientRect();
+  console.log(divbox);
+   divwidth = divbox.width;
+   divheight =  divbox.height;
   // create "canvas"
-  canvas = createCanvas(0, 0);
+  canvas = createCanvas(divwidth-50, divheight);
+  canvas.parent('sketch-holder');
 
   // create p5.sound.js objects
   phrase = new Phrase();
@@ -78,8 +86,8 @@ function playSound(){
   }
 
   // play each synth
-//  drums.handleDrums();
-//  drums2.handleDrums();
+  drums.handleDrums();
+  drums2.handleDrums();
 
 }
 
@@ -93,12 +101,12 @@ function setupInstruments(){
   // envelope: function(attackTime, decayTime, releaseTime, attackLevel, susLevel, releaseLevel)
   drums.setEnvelope(0.01, 0.4, 0.8, 0.5, 0.2, 0.0);
   // function(filterType, frequency)
-  drums.setFilter("BP", 800);
+  drums.setFilter("LP", 2500);
   // function(delayIsOn, length, feedback, filterFrequency)
-  drums.setDelay(true, 0.1, 0.2, 1000);
+  drums.setDelay(true, 0.12, 0.4, 1000);
   drums.loadInstrument();
 
-  drums2.setEnvelope(0.01, 0.1, 0.4, 0.5, 0.2, 0.0);
+  drums2.setEnvelope(0.01, 0.03, 0.2, 0.3, 0.5, 0.0);
   drums2.setFilter("BP", 400);
   drums2.setDelay(false, 0.15, 0.6, 2000);
   drums2.loadInstrument();
@@ -112,14 +120,14 @@ function setupInstruments(){
 function launchPart0(){
 
   // setup instrument 1
-  drums.setDivisions(40, 120, 40, 20, 2, 3, 2);
-  drums.setWeights(18, 30, 24, 1, 5, 5, 10);
+  drums.setDivisions(40, 20, 10, 5, 2, 2, 2);
+  drums.setWeights(18, 35, 30, 20, 5, 5, 5);
   // start sound
   drums.isPlaying = true;
 
   // setup instrument 2
   drums2.setDivisions(120, 40, 10, 5, 3, 4, 2);
-  drums2.setWeights(30, 28, 20, 5, 15, 10, 2);
+  drums2.setWeights(28, 20, 25, 5, 2, 5, 7);
   // start sound
   drums2.isPlaying = true;
 

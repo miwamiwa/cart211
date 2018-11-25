@@ -21,7 +21,7 @@ function updateTime(){
   //////// HANDLE UPDATING SECONDS
 
 // increase seconds by 1 for every 1000 ms that the sketch has been running.
-
+/*
   if(millis()>tick){
     // set next trigger
     tick+=1000;
@@ -30,7 +30,7 @@ function updateTime(){
     // update clock text (clock.js)
     tellTime();
   }
-
+*/
   ///////// HANDLE CLOCKWORK
 
 // set number of days in february according to leap years

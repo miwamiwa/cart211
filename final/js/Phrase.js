@@ -2,8 +2,7 @@ function Phrase(noiseSeed){
   this.scale = new Scale();
   this.scaleNotes = this.scale.newKey;
   this.fullScaleNotes = concat(this.scaleNotes, concat(this.scaleNotes, concat(this.scaleNotes, this.scaleNotes)));
-  this.lastNote =2*this.scaleNotes.length;
-  this.notes = [this.lastNote];
+
   this.intervals = [];
   this.directions = [];
   this.directionWeights = [2, 1, 2];
@@ -14,54 +13,93 @@ function Phrase(noiseSeed){
   this.noiseSeed =noiseSeed;
   this.totalSeeds =5;
 
-this.rootNote = 40;
-
+  this.rootNote = 36;
+  this.lastNote =63;
+  this.notes = [this.lastNote];
   this.currentIdeas = [1];
   this.currentIdeasWeights = [10];
   //this.newIdeas = [2, 3, 4, 5, 6, 7];
   //this.newIdeasWeights = [6, 5, 4, 2, 2, 1];
-  this.newIdeas = [2, 13];
-  this.newIdeasWeights = [2, 3];
+  this.newIdeas = [2, 3, 4, 5, 6, 7];
+  this.newIdeasWeights = [5, 1, 1, 1, 1, 1];
 
   this.currentIdeaWeight = 5;
   this.newIdeaWeight =1;
   this.nextNote = 0;
-  this.distanceFromRoot =0;
+  this.distanceFromRoot =this.rootNote;
 
-  this.maxDistance =12;
+  this.maxDistance =50;
 }
 
-Phrase.prototype.newNote = function(index){
+Phrase.prototype.newNote = function(section, frame){
+this.noiseSeed = section;
+
   var chosenDirection = 0;
   chosenDirection = this.whichDirection();
   this.directions.push(chosenDirection);
 
   var chosenInterval =0;
-//console.log("picking new interval");
-chosenInterval = this.whichInterval();
-var intervalVector = chosenInterval*chosenDirection;
-this.intervals.push(intervalVector);
+  //console.log("picking new interval");
+  chosenInterval = this.whichInterval();
+  var intervalVector = chosenInterval*chosenDirection;
+  this.intervals.push(intervalVector);
 
-// the following for() is here to remove empty spaces creating when pausing.
-// might be unnecessary to check for empty space if pause is ever not enabled.
-checkForEmpties(this.intervals);
+  //
+  this.lastNote = this.lastNote+intervalVector;
+  this.nextNote = this.rootNote+arraySum(this.fullScaleNotes, this.lastNote);
 
-//
-this.nextNote = this.rootNote+arraySum(this.fullScaleNotes, this.lastNote);
+  this.notes.push(this.nextNote);
+  //console.log("notes :"+this.notes);
+//  this.noiseInc += this.noiseRate;
+this.noiseInc = frame;
 
-this.lastNote = this.lastNote+intervalVector;
-this.distanceFromRoot += intervalVector;
-this.notes.push(this.nextNote);
-//console.log("notes :"+this.notes);
-this.noiseInc += this.noiseRate;
-return this.nextNote;
+  // DISPLAY NOTES ON SCREEN
+
+  var notecounter =this.rootNote;
+
+  var sw =divwidth/arraySum(this.fullScaleNotes, 0);
+  var lineLength = 10;
+  var lineX = height/2;
+  var scalemin = this.rootNote;
+  var scalemax = scalemin + arraySum(this.fullScaleNotes, 0);
+  strokeWeight(sw);
+  background(185);
+  //grid
+  for (var i=scalemin; i<scalemax; i++){
+    var ypos = map(i, scalemin, scalemax, 0, divwidth);
+    stroke(100);
+    line( ypos,lineX,  ypos, lineX+lineLength);
+  }
+  //scalenotes
+  for (var i=0; i<this.fullScaleNotes.length; i++){
+   stroke(0);
+    notecounter += this.fullScaleNotes[i];
+    //var thisNoteFreq = midiToFreq(notecounter);
+    var ypos = map(notecounter, scalemin, scalemax, 0, divwidth);
+    line(ypos, lineX, ypos,  lineX+lineLength);
+  }
+  //currentnote
+  stroke(255, 0, 0);
+  var ypos = map(this.nextNote, scalemin, scalemax, 0, divwidth);
+  line(ypos, lineX, ypos, lineX+lineLength);
+
+//currentinterval
+noStroke();
+textSize(20);
+text("interval: "+chosenInterval, width/2, 40)
+
+
+  // RETURN NOTE
+  return this.nextNote;
+
 }
+
 
 Phrase.prototype.whichInterval = function(){
   var motion="";
   motion = this.leapOrStep();
   if(motion==="leap"){
-this.currentIdeasWeights[0]=0;
+    this.currentIdeasWeights[0]=0;
   }
   else if(motion==="step"){
     this.currentIdeasWeights[0]=20;
@@ -92,22 +130,22 @@ Phrase.prototype.leapOrStep = function(){
 }
 
 Phrase.prototype.currentOrNew = function(){
-noiseSeed(this.noiseSeed);
-var stim = noise(this.noiseInc);
-var stimDivision = this.currentIdeaWeight + this.newIdeaWeight;
-var portion = 1 / stimDivision;
-var choice=0;
+  noiseSeed(this.noiseSeed);
+  var stim = noise(this.noiseInc);
+  var stimDivision = this.currentIdeaWeight + this.newIdeaWeight;
+  var portion = 1 / stimDivision;
+  var choice=0;
 
-if(stim<this.currentIdeaWeight*portion||this.newIdeas.length===0){
+  if(stim<this.currentIdeaWeight*portion||this.newIdeas.length===0){
 
-  choice = this.whichCurrentIdea();
+    choice = this.whichCurrentIdea();
 
-} else{
+  } else{
 
-  choice = this.whichNewIdea();
-}
-//console.log("interval chosen: "+choice);
-return choice;
+    choice = this.whichNewIdea();
+  }
+  //console.log("interval chosen: "+choice);
+  return choice;
 }
 
 Phrase.prototype.whichCurrentIdea = function(){
@@ -130,16 +168,16 @@ Phrase.prototype.whichCurrentIdea = function(){
   }
   var result = this.currentIdeas[choice];
   this.newIdeaWeight += 1;
-//  console.log("interval will be a currently known idea");
-//  console.log("current ideas: "+this.currentIdeas);
-//  console.log("current idea choice index: "+choice);
-//  console.log("chosen current idea: "+result);
+  //  console.log("interval will be a currently known idea");
+  //  console.log("current ideas: "+this.currentIdeas);
+  //  console.log("current idea choice index: "+choice);
+  //  console.log("chosen current idea: "+result);
   return result;
 }
 
 Phrase.prototype.whichNewIdea = function(){
-//  console.log("interval will be a new idea");
-//  console.log("new ideas "+this.newIdeas);
+  //  console.log("interval will be a new idea");
+  //  console.log("new ideas "+this.newIdeas);
   noiseSeed(this.noiseSeed+2);
   var stim = noise(this.noiseInc);
   var stimDivision = this.newIdeas.length;
@@ -167,15 +205,16 @@ Phrase.prototype.whichNewIdea = function(){
 }
 
 Phrase.prototype.whichDirection = function(){
-  if(this.distanceFromRoot>this.maxDistance){
-    this.directionWeights = [2, 1, 0];
+  this.distanceFromRoot = this.lastNote-64;
+  if(this.distanceFromRoot>40){
+    this.directionWeights = [5, 3, 3];
   }
-  else if (this.distanceFromRoot<-this.maxDistance){
-    this.directionWeights = [0, 1, 2];
+  else if (this.distanceFromRoot<-40){
+    this.directionWeights = [1, 1, 5];
   }
   else{
-  this.directionWeights = [2, 1, 2];
-}
+    this.directionWeights = [2, 1, 2];
+  }
   //console.log("chosing direction");
   noiseSeed(this.noiseSeed+3);
   var stim = noise(this.noiseInc);

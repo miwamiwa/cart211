@@ -17,8 +17,14 @@
   currentT[4] =  d.getMinutes();
   currentT[5] =  d.getSeconds();
 
-  // get frames since start and assign to musicInc
-  musicInc = framesSinceStart().totalFrames;
+  // update frame
+  var info = framesSinceStart();
+  musicInc = info.totalFrames;
+  currentSection = info.currentSection;
+  framesSinceSection = info.framesSinceSection;
+
+  // get correct position within section
+  //drums.catchUpSection();
 
 // update clock text
   	tellTime();
@@ -51,7 +57,6 @@ if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
   	currentT[2] = 31;
     // year is increased
   	currentT[0] +=1;
-    musicInc = framesSinceStart().totalFrames;
   }
 
   // month is 1 and day is 31 and month is decreased,
@@ -62,7 +67,6 @@ if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
   	currentT[2] = 31;
     // year is decreased
   	currentT[0] -=1;
-    musicInc = framesSinceStart().totalFrames;
   }
 
   // if month is decreased and date doesn't fit next month in line,
@@ -74,7 +78,6 @@ if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
       dayzInMonth[1] = 29;
     }
   	currentT[2] = dayzInMonth[currentT[1]-1];
-    musicInc = framesSinceStart().totalFrames;
   }
 
   // if month is increased and date doesn't fit next month in line,
@@ -86,7 +89,6 @@ if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
       dayzInMonth[1] = 29;
     }
   	currentT[2] = dayzInMonth[currentT[1]-1];
-    musicInc = framesSinceStart().totalFrames;
   }
 
   // else if none of the exceptions above are found, update currently
@@ -95,13 +97,20 @@ if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
   else {
 
   // update time
-currentT[y] = newTime;
- // update frame
- musicInc = framesSinceStart().totalFrames;
+ currentT[y] = newTime;
+
   }
+  // update frame
+  var info = framesSinceStart();
+  musicInc = info.totalFrames;
+  currentSection = info.currentSection;
+  framesSinceSection = info.framesSinceSection;
+
+  // get correct position within section
+  //drums.catchUpSection();
 
  // reset/prevent clock tick
-  tick = millis()+1000;
+  tick = millis()+map(info.framesSinceSection,0, 60, 0, 1000 );
 // update clock text
   tellTime();
   }
@@ -257,5 +266,14 @@ currentT[y] = newTime;
     }
 
     console.log(currentTime);
+    return currentTime;
+  }
+
+  function getSection(frame){
+    var currentTime = {
+      currentFrame: frame,
+      currentSection: floor(frame / sectionLength),
+      framesSinceSection: frame%sectionLength,
+    }
     return currentTime;
   }

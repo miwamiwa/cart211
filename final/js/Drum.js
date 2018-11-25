@@ -186,47 +186,32 @@ Drum.prototype.handleDrums = function(){
   // if this instrument is turned on
   if(this.isPlaying){
 
-    // if current frame is a multiple of phrase length
-    if(musicInc%(this.bar*this.barperphrase)===0 && musicInc!=0){
-      // count frases
-      this.phrase+=1;
-      // reset time
-      // musicInc =0;
-      // newPhrase=true;
-    }
+    var sectionInfo = getSection(musicInc);
 
-    if(this.phrase>=this.phrasepersection){
-      this.section+=1;
-      this.phrase=0;
+    noiseSeed(sectionInfo.currentSection);
 
-
-      phrase = new Phrase(this.section);
-
-    }
-
-    var weight =  this.salience(musicInc);
-
-    // uncomment this to get the same drum line every time
-    //noiseSeed(this.section);
-    noiseSeed(this.section);
-    var thisnoise = noise(musicInc*this.noiseInc);
+    var weight =  this.salience(sectionInfo.framesSinceSection);
+    var thisnoise = noise(sectionInfo.framesSinceSection*this.noiseInc);
     var stimulus = thisnoise*this.stimulusScale;
     //console.log("stimulus 1"+stimulus);
 
     if(stimulus+weight>this.thresh&&weight!=0){
 
-      var loudness = map(stimulus+weight, 0, this.stimulusScale+this.maxWeight, 0, 1);
-      loudness = constrain(loudness, 0, 1);
+    //var loudness = map(stimulus+weight, 0, this.stimulusScale+this.maxWeight, 0, 1);
+    //  loudness = constrain(loudness, 0, 1);
       //  console.log("stimulus: "+stimulus);
       //  console.log("loudness: "+loudness);
 
       //this.filter.freq( 18150-loudness*18000 );
-
-      this.note = phrase.newNote();
+      var incomingnote = this.catchUpToNote(sectionInfo.currentSection, sectionInfo.framesSinceSection);
+      console.log("incoming note "+incomingnote);
+      this.note = incomingnote;
+      //this.note = phrase.newNote(sectionInfo.currentSection, sectionInfo.framesSinceSection);
       var newNote =midiToFreq(constrain(this.note, 0, 127));
     //  console.log("THE NEW NOTE IS : "+newNote);
 
       this.thisSynth.freq(newNote);
+      console.log("note: "+newNote)
       this.env.play();
       this.noteIndex+=1;
     }
@@ -273,4 +258,49 @@ Drum.prototype.salience = function(t){
     factor+=this.fineweight;
   }
   return factor;
+}
+Drum.prototype.catchUpToNote = function(section, framesince){
+  var numIntervals =0;
+  var startNote;
+  phrase.lastNote = phrase.fullScaleNotes[phrase.fullScaleNotes.length/2];
+  console.log("lastNote "+phrase.lastNote)
+  noiseSeed(section);
+  for (var i=0; i<framesince; i++){
+    var weight =  this.salience(i);
+    var thisnoise = noise(i*this.noiseInc);
+    var stimulus = thisnoise*this.stimulusScale;
+    if(stimulus+weight>this.thresh&&weight!=0){
+    startNote = phrase.newNote(section, i);
+    console.log("start note "+startNote)
+    }
+  }
+  return startNote;
+}
+
+Drum.prototype.catchUpSection = function(){
+  var numIntervals=0;
+  var catchupstart = currentSection*sectionLength;
+  var catchupend = musicInc;
+  phrase.lastNote = phrase.fullScaleNotes[phrase.scaleNotes.length];
+
+  noiseSeed(currentSection);
+  console.log("start "+catchupstart)
+  console.log("end "+catchupend);
+  var catchuptime = [];
+
+  for (var i=catchupstart; i<catchupend; i++){
+    var weight =  this.salience(i);
+    var thisnoise = noise(i*this.noiseInc);
+    var stimulus = thisnoise*this.stimulusScale;
+    if(stimulus+weight>this.thresh&&weight!=0){
+    numIntervals +=1;
+    catchuptime.push(i);
+    }
+  }
+console.log("intervals "+numIntervals);
+ for (var i=0; i<numIntervals; i++){
+   phrase.lastNote = phrase.newNote(currentSection, catchuptime[i]);
+ }
+ console.log("lastNote = "+phrase.lastNote);
+
 }
