@@ -176,7 +176,7 @@ link="midterm/index.html"
 }
 for(var i=0; i<frame2; i++){
   if(dist(mouseX,mouseY,e2x[i],e2y[i]) <e2d[i]/2&&mouseX>500&&mouseY>180){
-link="https://www.gmail.com.com"
+link="final/index.html"
 windowObjectReference = window.open(link, "yo", strWindowFeatures);
 mouseElsewhere=false;
 link="";

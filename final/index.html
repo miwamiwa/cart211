@@ -1,116 +1,126 @@
-  <!doctype html>
-  <html>
+<!doctype html>
+<html>
 
-  <head>
-  	<link rel="stylesheet" href="css/hwcss.css">
-  	<meta charset="UTF-8">
+<head>
+  <link rel="stylesheet" href="css/hwcss.css">
+  <meta charset="UTF-8">
 
-  		<script src="js/libraries/p5.min.js"></script>
-      <script src="js/libraries/p5.sound.js"></script>
+  <script src="js/libraries/p5.min.js"></script>
+  <script src="js/libraries/p5.sound.js"></script>
 
-  		<script src="js/script.js"></script>
-      <script src="js/clock.js"></script>
-      <script src="js/time.js"></script>
-      <script src="js/Drum.js"></script>
-      <script src="js/Drumz.js"></script>
-      <script src="js/Phrase.js"></script>
-      <script src="js/Scale.js"></script>
-
-
-  	<title>final werk</title>
-  </head>
-
-  <body onload="setTime()">
+  <script src="js/script.js"></script>
+  <script src="js/Gear.js"></script>
+  <script src="js/clock.js"></script>
+  <script src="js/time.js"></script>
+  <script src="js/Drum.js"></script>
+  <script src="js/Drumz.js"></script>
+  <script src="js/Phrase.js"></script>
+  <script src="js/Scale.js"></script>
 
 
+  <title>final werk</title>
+</head>
 
-  	<section id="topsection" onmouseover=selecthoverarea(0)>
-  		<article class="hvr-underline-from-left">current time: </article>
-  <article id="timeinuse" class="hvr-underline-from-left">x</article>
-  	</section>
+<body onload="setTime()">
+
+
+
+  <section id="topsection" onmouseover=selecthoverarea(0)>
+    <!--
+    <article class="hvr-underline-from-left">current time: </article>
+    <article id="timeinuse" class="hvr-underline-from-left">x</article>
+  -->
+
+  <article>
+    the longest music piece
+  </article>
+  </section>
 
 
   <section id="clocksection">
 
-  	<div onmouseover=selecthoverarea(1)>
-    <button onclick=adjustTime(1,0) class="hvr-round-corners">+</button>
-  	<article>YEAR:</article>
-  	<article id="y">x</article>
-    <button onclick=adjustTime(-1,0) class="hvr-round-corners">-</button>
-  	</div>
+    <div onmouseover=selecthoverarea(1)>
+      <button onclick=adjustTime(1,0) class="hvr-round-corners">+</button>
+      <article class="clocktext">YEAR:</article>
+      <article id="y" class="clocknum">x</article>
+      <button onclick=adjustTime(-1,0) class="hvr-round-corners">-</button>
+    </div>
 
-  		<div onmouseover=selecthoverarea(2)>
+    <div onmouseover=selecthoverarea(2)>
       <button onclick=adjustTime(1,1) class="hvr-round-corners">+</button>
-  	<article>MONTH:</article>
-  	<article id="mo">x</article>
-    	<button onclick=adjustTime(-1,1) class="hvr-round-corners">-</button>
-  	</div>
+      <article class="clocktext">MONTH:</article>
+      <article id="mo" class="clocknum">x</article>
+      <button onclick=adjustTime(-1,1) class="hvr-round-corners">-</button>
+    </div>
 
-  		<div onmouseover=selecthoverarea(3)>
+    <div onmouseover=selecthoverarea(3)>
       <button onclick=adjustTime(1,2) class="hvr-round-corners">+</button>
-  	<article>DAY:</article>
-  	<article id="d">x</article>
-    	<button onclick=adjustTime(-1,2) class="hvr-round-corners">-</button>
-  </div>
+      <article class="clocktext">DAY:</article>
+      <article id="d" class="clocknum">x</article>
+      <button onclick=adjustTime(-1,2) class="hvr-round-corners">-</button>
+    </div>
 
-  	<div onmouseover=selecthoverarea(4)>
-    	<button onclick=adjustTime(1,3) class="hvr-round-corners">+</button>
-  	<article>HOUR:</article>
-  	<article id="h">x</article>
-    	<button onclick=adjustTime(-1,3) class="hvr-round-corners">-</button>
-  </div>
+    <div onmouseover=selecthoverarea(4)>
+      <button onclick=adjustTime(1,3) class="hvr-round-corners">+</button>
+      <article class="clocktext">HOUR:</article>
+      <article id="h" class="clocknum">x</article>
+      <button onclick=adjustTime(-1,3) class="hvr-round-corners">-</button>
+    </div>
 
-  			<div onmouseover=selecthoverarea(5)>
-        <button onclick=adjustTime(1,4) class="hvr-round-corners">+</button>
-  	<article>MINUTE:</article>
-  	<article id="mi">x</article>
-    <button onclick=adjustTime(-1,4) class="hvr-round-corners">-</button>
-  </div>
+    <div onmouseover=selecthoverarea(5)>
+      <button onclick=adjustTime(1,4) class="hvr-round-corners">+</button>
+      <article class="clocktext">MINUTE:</article>
+      <article id="mi" class="clocknum">x</article>
+      <button onclick=adjustTime(-1,4) class="hvr-round-corners">-</button>
+    </div>
 
-  			<div onmouseover=selecthoverarea(6)>
-        <button onclick=adjustTime(1,5) class="hvr-round-corners">+</button>
-  	<article>SECOND:</article>
-  	<article id="s">x</article>
+    <div onmouseover=selecthoverarea(6)>
+      <button onclick=adjustTime(1,5) class="hvr-round-corners">+</button>
+      <article class="clocktext">SECOND:</article>
+      <article id="s" class="clocknum">0</article>
       <button onclick=adjustTime(-1,5) class="hvr-round-corners">-</button>
-        </div>
+    </div>
+
 
   </section>
 
-<section id="sketchsection">
-  <article id="sketch-holder">
-  </article>
-</section>
+  <section id="sketchsection" onmouseover=selecthoverarea(0)>
+
+  </section>
   <section id="menusection" onmouseover=selecthoverarea(0)>
 
-  <article id="display_me">
-  	<article class="menuarticle hvr-round-corners"> yo yo yo yo </article>
-  	<article class="menuarticle hvr-round-corners"> yoyoyoyoyoy </article>
-  	<article class="menuarticle hvr-round-corners"> yooooo </article>
-  </article>
+    <article id="display_me">
+      <article class="menuarticle hvr-round-corners"> intro </article>
+      <article class="menuarticle hvr-round-corners"> controls </article>
+      <article class="menuarticle hvr-round-corners"> reset to actual time </article>
+    </article>
 
-  <button id="trigger" onclick="toggleShowHide()"> menu </button>
+    <button id="trigger" onclick="toggleShowHide()"> menu </button>
 
   </section>
+
+  <div id="sketch-holder">
+  </div>
 
   <script>
 
-    var clockT = [6];
-    var currentT = [6];
-    var currentlyHovered=0;
+  var clockT = [6];
+  var currentT = [6];
+  var currentlyHovered=0;
 
-     clockT[0] =  document.getElementById("y");
-     clockT[1] =  document.getElementById("mo");
-     clockT[2] =  document.getElementById("d");
-     clockT[3] =  document.getElementById("h");
-     clockT[4] =  document.getElementById("mi");
-     clockT[5] =  document.getElementById("s");
+    clockT[0] =  document.getElementById("y");
+    clockT[1] =  document.getElementById("mo");
+    clockT[2] =  document.getElementById("d");
+    clockT[3] =  document.getElementById("h");
+    clockT[4] =  document.getElementById("mi");
+    clockT[5] =  document.getElementById("s");
 
-     var timeInUse = document.getElementById("timeinuse");
+  var timeInUse = document.getElementById("timeinuse");
 
-     function selecthoverarea(x){
-       currentlyHovered = x;
-     }
+  function selecthoverarea(x){
+    currentlyHovered = x;
+  }
   </script>
 
-  </body>
-  </html>
+</body>
+</html>

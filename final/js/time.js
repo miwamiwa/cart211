@@ -5,7 +5,7 @@ or caused by user input. same for minutes, hours, days, months, years.
 */
 
 // first trigger that will cause seconds to tick (ms value)
-var tick = 1000;
+var tick = musicInc+60;
 // an array containing number of days in each month of the year
 var daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
@@ -21,16 +21,16 @@ function updateTime(){
   //////// HANDLE UPDATING SECONDS
 
 // increase seconds by 1 for every 1000 ms that the sketch has been running.
-/*
-  if(millis()>tick){
+
+  if(musicInc>tick){
     // set next trigger
-    tick+=1000;
+    tick = musicInc+60;
     // update seconds
     currentT[5]+=1;
     // update clock text (clock.js)
     tellTime();
   }
-*/
+
   ///////// HANDLE CLOCKWORK
 
 // set number of days in february according to leap years

@@ -32,20 +32,37 @@ var pos=[6];
 
 var   currentSection;
 var  framesSinceSection;
+var lastClockValue = []
+
+var gearPic;
+var gearObject0;
+var gearObject1;
+var gearObject2;
+var gearObject3;
+var gearObject4;
+var gearObject5;
+
+function preload() {
+
+  // load images
+  gearPic = loadImage("images/gear.png");
+}
 
 // setup()
 //
 // creates p5.sound.js objects
 
 function setup(){
+
   var thisdiv = document.getElementById('sketch-holder');
   var divbox = thisdiv.getBoundingClientRect();
-  console.log(divbox);
-   divwidth = divbox.width;
-   divheight =  divbox.height;
+//  console.log(divbox);
+  divwidth = divbox.width;
+  divheight =  divbox.height;
   // create "canvas"
-  canvas = createCanvas(divwidth-50, divheight);
+  canvas = createCanvas(divwidth, divheight);
   canvas.parent('sketch-holder');
+  newGearObjects();
 
   // create p5.sound.js objects
   phrase = new Phrase();
@@ -55,6 +72,7 @@ function setup(){
   // instrument and music setup
   setupInstruments();
   launchPart0();
+    displayGears();
 
 }
 
@@ -64,10 +82,12 @@ function setup(){
 
 function draw(){
 
+
   // play sound
   playSound();
   // run clock
   updateTime();
+
 
 }
 
@@ -79,15 +99,55 @@ function playSound(){
 
   // increment time (frames)
   if(!newPhrase){
-   musicInc+=musicSpeed;
-  //  console.log("musicInc: "+musicInc)
+    musicInc+=musicSpeed;
+    //  console.log("musicInc: "+musicInc)
   } else {
     newPhrase=false;
   }
 
   // play each synth
   drums.handleDrums();
-  drums2.handleDrums();
+   drums2.handleDrums();
+
+}
+
+function displayGears(){
+    background(255);
+    phrase.displayNotes();
+  gearObject0.display();
+  gearObject1.display();
+  gearObject2.display();
+  gearObject3.display();
+  gearObject4.display();
+  gearObject5.display();
+}
+
+function newGearObjects(){
+
+  var gear0size = 0.3*height;
+  var gear1size = 0.65*height;
+  var gear2size = 0.4*height;
+  var gear3size = 0.2*height;
+  var gear4size = 0.44*height;
+  var gear5size = 0.23*height;
+  gearObject0 = new Gear(0.42*width, 0.98*height, 5, gear0size, gear0size);
+  gearObject1 = new Gear(0.615*width, 1.13*height, 4,gear1size, gear1size);
+  gearObject2 = new Gear(0.035*width, 0.05*height, 2, gear2size, gear2size);
+  gearObject3 = new Gear(0.01*width, 0.320*height, 3, gear3size, gear3size);
+  gearObject4 = new Gear(0.965*width, 0.04*height, 0, gear4size, gear4size);
+  gearObject5 = new Gear(0.99*width, 0.34*height, 1, gear5size, gear5size);
+}
+
+function windowResized(){
+
+  var thisdiv = document.getElementById('sketch-holder');
+  var divbox = thisdiv.getBoundingClientRect();
+//  console.log(divbox);
+  divwidth = divbox.width;
+  divheight =  divbox.height;
+  // create "canvas"
+  canvas = resizeCanvas(divwidth, divheight);
+  newGearObjects();
 
 }
 
@@ -127,7 +187,7 @@ function launchPart0(){
 
   // setup instrument 2
   drums2.setDivisions(120, 40, 10, 5, 3, 4, 2);
-  drums2.setWeights(28, 20, 25, 5, 2, 5, 7);
+  drums2.setWeights(28, 20, 20, 5, 2, 5, 7);
   // start sound
   drums2.isPlaying = true;
 
@@ -218,6 +278,7 @@ function mouseWheel(event) {
     currentT[currentlyHovered-1] += event.delta/abs(event.delta);
     // update musicInc
     musicInc = framesSinceStart().totalFrames;
+    tick = musicInc+60;
     // update clock text
     tellTime();
 

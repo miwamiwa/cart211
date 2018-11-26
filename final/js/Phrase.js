@@ -21,7 +21,7 @@ function Phrase(noiseSeed){
   //this.newIdeas = [2, 3, 4, 5, 6, 7];
   //this.newIdeasWeights = [6, 5, 4, 2, 2, 1];
   this.newIdeas = [2, 3, 4, 5, 6, 7];
-  this.newIdeasWeights = [5, 1, 1, 1, 1, 1];
+  this.newIdeasWeights = [1, 1, 1, 1, 1, 1];
 
   this.currentIdeaWeight = 5;
   this.newIdeaWeight =1;
@@ -54,43 +54,49 @@ this.noiseSeed = section;
 this.noiseInc = frame;
 
   // DISPLAY NOTES ON SCREEN
-
-  var notecounter =this.rootNote;
-
-  var sw =divwidth/arraySum(this.fullScaleNotes, 0);
-  var lineLength = 10;
-  var lineX = height/2;
-  var scalemin = this.rootNote;
-  var scalemax = scalemin + arraySum(this.fullScaleNotes, 0);
-  strokeWeight(sw);
-  background(185);
-  //grid
-  for (var i=scalemin; i<scalemax; i++){
-    var ypos = map(i, scalemin, scalemax, 0, divwidth);
-    stroke(100);
-    line( ypos,lineX,  ypos, lineX+lineLength);
-  }
-  //scalenotes
-  for (var i=0; i<this.fullScaleNotes.length; i++){
-   stroke(0);
-    notecounter += this.fullScaleNotes[i];
-    //var thisNoteFreq = midiToFreq(notecounter);
-    var ypos = map(notecounter, scalemin, scalemax, 0, divwidth);
-    line(ypos, lineX, ypos,  lineX+lineLength);
-  }
-  //currentnote
-  stroke(255, 0, 0);
-  var ypos = map(this.nextNote, scalemin, scalemax, 0, divwidth);
-  line(ypos, lineX, ypos, lineX+lineLength);
-
-//currentinterval
-noStroke();
-textSize(20);
-text("interval: "+chosenInterval, width/2, 40)
-
-
+this.displayNotes();
   // RETURN NOTE
   return this.nextNote;
+
+}
+
+// displaynotes()
+//
+// displays keys and notes being played
+
+Phrase.prototype.displayNotes = function(){
+
+    var notecounter =this.rootNote;
+
+    var sw =divwidth/arraySum(this.fullScaleNotes, 0);
+    var lineLength = 50;
+    var lineX = height*0.75-lineLength/2;
+    var scalemin = this.rootNote;
+    var scalemax = scalemin + arraySum(this.fullScaleNotes, 0);
+    strokeWeight(sw);
+
+    //grid
+    for (var i=scalemin; i<scalemax; i++){
+      var ypos = map(i, scalemin, scalemax, 0, divwidth);
+      stroke(166, 193, 191);
+      line( ypos,lineX,  ypos, lineX+lineLength);
+    }
+    //scalenotes
+    for (var i=0; i<this.fullScaleNotes.length; i++){
+     stroke(101, 122, 120);
+      notecounter += this.fullScaleNotes[i];
+      //var thisNoteFreq = midiToFreq(notecounter);
+      var ypos = map(notecounter, scalemin, scalemax, 0, divwidth);
+      line(ypos, lineX, ypos,  lineX+lineLength);
+    }
+    //currentnote
+    stroke(5, 15, 14);
+    var ypos = map(this.nextNote, scalemin, scalemax, 0, divwidth);
+    line(ypos, lineX, ypos, lineX+lineLength);
+
+  //currentinterval
+  noStroke();
+  textSize(20);
 
 }
 

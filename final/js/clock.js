@@ -1,5 +1,14 @@
   var dayzInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   var leapDay =0;
+  // time at which the piece started
+  var startTime = {
+    year: 2018,
+    month: 5,
+    day: 11,
+    hour: 10,
+    minute: 10,
+    second: 10,
+  }
 // setTime()
 //
 // called upon loading the page. gets the current time and
@@ -110,10 +119,12 @@ if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
   //drums.catchUpSection();
 
  // reset/prevent clock tick
-  tick = millis()+map(info.framesSinceSection,0, 60, 0, 1000 );
+  tick = musicInc+60
 // update clock text
   tellTime();
   }
+
+
 
 // tellTime()
 //
@@ -123,17 +134,12 @@ if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
 
     // update each clock element
   	for (var i=0; i<6; i++){
+    if(currentT[i]!=lastClockValue[i]){
   		clockT[i].innerHTML = currentT[i];
+      lastClockValue[i] = currentT[i];
+    }
   	}
-
-    // update string on top of the screen
-  	timeInUse.innerHTML =
-  	clockT[0].innerHTML + "-" +
-  	clockT[1].innerHTML + "-" +
-  	clockT[2].innerHTML + ", " +
-  	clockT[3].innerHTML + ":" +
-  	clockT[4].innerHTML + ":" +
-  	clockT[5].innerHTML;
+      displayGears();
   }
 
   // menu display script
@@ -177,15 +183,6 @@ if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
 // start of section
 
   function framesSinceStart(){
-    // time at which the piece started
-    var startTime = {
-      year: 2018,
-      month: 5,
-      day: 11,
-      hour: 10,
-      minute: 10,
-      second: 10,
-    }
 
     // time since piece started
     var changeInTime = {
@@ -254,7 +251,7 @@ if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
       changeInTime.minute*60*60,
       changeInTime.second*60
     ]
-    console.log("days passed: "+monthToDays);
+//    console.log("days passed: "+monthToDays);
     // total up number of frames since "real" start of the piece
     var total = arraySum(changeInFrames, 0);
 
@@ -265,7 +262,7 @@ if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
       framesSinceSection: total%sectionLength,
     }
 
-    console.log(currentTime);
+  //  console.log(currentTime);
     return currentTime;
   }
 
@@ -275,5 +272,9 @@ if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
       currentSection: floor(frame / sectionLength),
       framesSinceSection: frame%sectionLength,
     }
+    if(frame<0){
+      currentTime.framesSinceSection = sectionLength + currentTime.framesSinceSection;
+    }
+        //console.log("since "+currentTime.framesSinceSection)
     return currentTime;
   }

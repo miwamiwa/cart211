@@ -204,14 +204,14 @@ Drum.prototype.handleDrums = function(){
 
       //this.filter.freq( 18150-loudness*18000 );
       var incomingnote = this.catchUpToNote(sectionInfo.currentSection, sectionInfo.framesSinceSection);
-      console.log("incoming note "+incomingnote);
+    //  console.log("incoming note "+incomingnote);
       this.note = incomingnote;
       //this.note = phrase.newNote(sectionInfo.currentSection, sectionInfo.framesSinceSection);
       var newNote =midiToFreq(constrain(this.note, 0, 127));
     //  console.log("THE NEW NOTE IS : "+newNote);
 
       this.thisSynth.freq(newNote);
-      console.log("note: "+newNote)
+    //  console.log("note: "+newNote)
       this.env.play();
       this.noteIndex+=1;
     }
@@ -263,7 +263,7 @@ Drum.prototype.catchUpToNote = function(section, framesince){
   var numIntervals =0;
   var startNote;
   phrase.lastNote = phrase.fullScaleNotes[phrase.fullScaleNotes.length/2];
-  console.log("lastNote "+phrase.lastNote)
+//  console.log("lastNote "+phrase.lastNote)
   noiseSeed(section);
   for (var i=0; i<framesince; i++){
     var weight =  this.salience(i);
@@ -271,7 +271,7 @@ Drum.prototype.catchUpToNote = function(section, framesince){
     var stimulus = thisnoise*this.stimulusScale;
     if(stimulus+weight>this.thresh&&weight!=0){
     startNote = phrase.newNote(section, i);
-    console.log("start note "+startNote)
+  //  console.log("start note "+startNote)
     }
   }
   return startNote;
@@ -284,8 +284,8 @@ Drum.prototype.catchUpSection = function(){
   phrase.lastNote = phrase.fullScaleNotes[phrase.scaleNotes.length];
 
   noiseSeed(currentSection);
-  console.log("start "+catchupstart)
-  console.log("end "+catchupend);
+//  console.log("start "+catchupstart)
+//  console.log("end "+catchupend);
   var catchuptime = [];
 
   for (var i=catchupstart; i<catchupend; i++){
@@ -297,10 +297,10 @@ Drum.prototype.catchUpSection = function(){
     catchuptime.push(i);
     }
   }
-console.log("intervals "+numIntervals);
+// console.log("intervals "+numIntervals);
  for (var i=0; i<numIntervals; i++){
    phrase.lastNote = phrase.newNote(currentSection, catchuptime[i]);
  }
- console.log("lastNote = "+phrase.lastNote);
+ // console.log("lastNote = "+phrase.lastNote);
 
 }
