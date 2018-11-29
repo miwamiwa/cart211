@@ -5,7 +5,7 @@ or caused by user input. same for minutes, hours, days, months, years.
 */
 
 // first trigger that will cause seconds to tick (ms value)
-var tick = musicInc+60;
+
 // an array containing number of days in each month of the year
 var daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
@@ -119,7 +119,7 @@ if (currentT[2]<=0){
   // if the previous month was the first month,
   if(currentT[1] ===1 ){
     // decrease months by 1
-    currentT[1]-=1;
+    currentT[1]=12;
     // now the month is the last one.
     currentT[2]=daysInMonth[11];
       // update clock text
@@ -127,8 +127,10 @@ if (currentT[2]<=0){
   }
   // if the previous month is any month other than the first
   else {
+
     // decrease months by 1
       currentT[1]-=1;
+
       // set number of days to number of days in new month.
       currentT[2]=daysInMonth[currentT[1]-1];
       tellTime();
@@ -137,6 +139,7 @@ if (currentT[2]<=0){
 
 // if months reach 0, decrease years by 1
 if (currentT[1]<1){
+  console.log("SUP")
   currentT[0]-=1;
   // reset months
   currentT[1]=12;

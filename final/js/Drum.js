@@ -193,7 +193,27 @@ Drum.prototype.handleDrums = function(){
     this.beatweight = floor(map(-cos(section*0.2), -1, 1, 1, 10));
     this.subweight = floor(map(-cos(section*0.3), -1, 1, 1, 10));
     this.fineweight = floor(map(-cos(section*0.4), -1, 1, 1, 10));
-    this.stimulusScale = floor(map(-cos(section*0.4), -1, 1, 10, 40));
+    this.stimulusScale = floor(map(-cos(section*0.4), -1, 1, 20, 40));
+    this.bar = floor(map(sin(section*0.0001), -1, 1, 20, 100));
+    this.beat = floor(map(sin(section*0.0002), -1, 1, 10, 50));
+    this.subdiv = floor(map(sin(section*0.0003), -1, 1, 3, 30));
+    this.finediv = floor(map(sin(section*0.0004), -1, 1, 1, 10));
+    this.divperbar = floor(this.bar/this.beat)
+    this.divperbeat = floor(this.beat/this.subdiv)
+    this.divpersub = floor(this.subdiv/this.finediv)
+
+    drums2.bar = this.bar;
+    drums2.beat = this.beat;
+    drums2.subdiv = this.subdiv;
+    drums2.finediv = this.finediv;
+    drums2.divperbar = this.divperbar;
+    drums2.divperbeat = this.divperbeat;
+    drums2.divpersub = this.divpersub;
+    drums2.barweight = floor(map(-cos(section*0.1), -1, 1, 4, 12));
+    drums2.beatweight = floor(map(-cos(section*0.2), -1, 1, 3, 12));
+    drums2.subweight = floor(map(-cos(section*0.3), -1, 1, 1, 12));
+    drums2.fineweight = floor(map(-cos(section*0.4), -1, 1, 1, 12));
+    drums2.stimulusScale = floor(map(-cos(section*0.4), -1, 1, 10, 20));
 
     phrase = new Phrase(sectionInfo.currentSection);
   }

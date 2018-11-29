@@ -186,6 +186,9 @@ Drumz.prototype.loadInstrument = function(){
   if(this.filtAtt==="LP"){
     this.filter=new p5.LowPass();
   }
+  if(this.filtAtt==="HP"){
+    this.filter=new p5.HighPass();
+  }
   // set filter frequency
   this.filter.freq(this.fFreq);
   // now load the type of oscillator used.

@@ -15,6 +15,7 @@
 // sets the on screen clock
 var phrase;
 var musicInc=0;
+var tick = musicInc+60;
 
   function setTime(){
 
@@ -35,6 +36,7 @@ var musicInc=0;
   currentSection = info.currentSection;
   framesSinceSection = info.framesSinceSection;
 phrase = new Phrase(currentSection);
+tick = musicInc+60;
   // get correct position within section
   //drums.catchUpSection();
 
@@ -56,6 +58,8 @@ phrase = new Phrase(currentSection);
 
   function adjustTime(x, y){
 
+
+
 // get time value specified by argument y and add x (either 1 or -1)
   var newTime = parseInt(clockT[y].innerHTML, 10) + x;
 
@@ -63,20 +67,22 @@ phrase = new Phrase(currentSection);
 
 // if month is 12 and day is 31 and month is increased,
 if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
+
     // months becomes 1
   	currentT[1] = 1;
     // days becomes 31
-  	currentT[2] = 31;
+  	//currentT[2] = 31;
     // year is increased
   	currentT[0] +=1;
   }
 
   // month is 1 and day is 31 and month is decreased,
-  else if (y===1 && currentT[2] === 31 && currentT[1] === 1 && x<0){
+  else if (y===1 && currentT[1] === 1 && x<0){
+console.log("HI")
     // month becomes 12
   	currentT[1] = 12;
     // day becomes 31
-  	currentT[2] = 31;
+  //	currentT[2] = 31;
     // year is decreased
   	currentT[0] -=1;
   }
@@ -84,6 +90,7 @@ if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
   // if month is decreased and date doesn't fit next month in line,
   // set the day to number of days in the next month.
   else if (y===1 && currentT[2] >= dayzInMonth[currentT[1]-2] && x===-1 ){
+
   	currentT[1] = newTime;
     dayzInMonth[1] = 28;
     if(currentT[0]%4===0){
@@ -95,6 +102,7 @@ if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
   // if month is increased and date doesn't fit next month in line,
   // set the day to number of days in the next month.
   else if (y===1 && currentT[2] >= dayzInMonth[currentT[1]] && x===1 ){
+
   	currentT[1] = newTime;
     dayzInMonth[1] = 28;
     if(currentT[0]%4===0){
@@ -107,7 +115,7 @@ if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
   // selected time value.
   // also update frames
   else {
-
+    console.log("new time "+newTime);
   // update time
  currentT[y] = newTime;
 
@@ -123,6 +131,7 @@ if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
 
  // reset/prevent clock tick
   tick = musicInc+60
+      console.log("adjust time "+x+", "+y);
 // update clock text
   tellTime();
   }
@@ -148,36 +157,6 @@ if (y===1 && currentT[2] === 31 && currentT[1] === 12 && x>0){
   // menu display script
   var displaythis = false;
 
-// showfunction()
-//
-// displays the menu by increasing opacity to 1
-
-  function showFunction(){
-  	document.getElementById("display_me").style.opacity = 1;
-  displaythis = true;
-  }
-
-// hidefunction()
-//
-// hides the menu by decreasing opacity to 0
-
-  function hideFunction(){
-  	document.getElementById("display_me").style.opacity = 0;
-  	displaythis = false;
-  }
-
-// toggleshowhide()
-//
-// toggles between menu display functions
-
-  function toggleShowHide(){
-  	 if(!displaythis){
-  		 showFunction()
-  	 }
-  	 else {
-  		 hideFunction()
-  	 }
-  }
 
 // framesSinceStart()
 //

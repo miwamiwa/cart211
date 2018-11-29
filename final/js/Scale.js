@@ -62,6 +62,7 @@ for (var i=0; i<this.newKey.length; i++){
   this.fullKey.push(this.newKey[i]);
 }
 }
+ console.log("key length "+this.fullKey.length)
 
 
 }

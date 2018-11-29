@@ -21,7 +21,14 @@ this.fullScaleNotes = this.scale.fullKey;
   //this.newIdeas = [2, 3, 4, 5, 6, 7];
   //this.newIdeasWeights = [6, 5, 4, 2, 2, 1];
   this.newIdeas = [2, 3, 4, 5, 6, 7];
-  this.newIdeasWeights = [1, 1, 1, 1, 1, 1];
+  this.newIdeasWeights = [
+    floor(map(-cos(section*0.0000012), -1, 1, 1, 10)),
+    floor(map(-cos(section*0.0000013), -1, 1, 1, 10)),
+    floor(map(-cos(section*0.0000014), -1, 1, 1, 10)),
+    floor(map(-cos(section*0.0000015), -1, 1, 1, 10)),
+    floor(map(-cos(section*0.0000016), -1, 1, 1, 10)),
+    floor(map(-cos(section*0.0000017), -1, 1, 1, 10))
+  ];
 
   this.currentIdeaWeight = 5;
   this.newIdeaWeight =1;
@@ -73,16 +80,19 @@ Phrase.prototype.displayNotes = function(){
     var lineX = height*0.75-lineLength/2;
     var scalemin = this.rootNote;
     var scalemax = scalemin + arraySum(this.fullScaleNotes, 0);
-    strokeWeight(sw);
+
+
 
     //grid
-    for (var i=scalemin; i<scalemax; i++){
+    for (var i=0; i<127; i++){
+      strokeWeight(sw-10);
       var ypos = map(i, scalemin, scalemax, 0, divwidth);
       stroke(166, 193, 191);
       line( ypos,lineX,  ypos, lineX+lineLength);
     }
     //scalenotes
     for (var i=0; i<this.fullScaleNotes.length; i++){
+      strokeWeight(sw);
      stroke(101, 122, 120);
       notecounter += this.fullScaleNotes[i];
       //var thisNoteFreq = midiToFreq(notecounter);
@@ -90,7 +100,8 @@ Phrase.prototype.displayNotes = function(){
       line(ypos, lineX, ypos,  lineX+lineLength);
     }
     //currentnote
-    stroke(5, 15, 14);
+    stroke(193, 176, 166);
+      strokeWeight(sw-4);
     var ypos = map(this.nextNote, scalemin, scalemax, 0, divwidth);
     line(ypos, lineX, ypos, lineX+lineLength);
 

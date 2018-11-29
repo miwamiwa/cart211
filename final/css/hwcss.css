@@ -30,6 +30,7 @@ rgb(53, 36, 26);
   padding:0;
   box-sizing:border-box;
   font-family: 'Gabriela', serif;
+  text-shadow: 2px 2px 2px #000000;
 }
 
 html, body{
@@ -71,10 +72,14 @@ section button, article{
 }
 button{
   font-size:3vw;
-  color: rgb(227, 242, 240);
-  background-color: rgb(101, 122, 120);
+  color: rgb(101, 122, 120);
+  background-color: rgb(227, 242, 240);
+  /*
+  */
   height: 4vw;
   border-radius:1vw;
+  border:3px solid rgb(166, 193, 191);
+
 }
 nav{
 
@@ -85,6 +90,7 @@ nav{
 .clocktext {
   padding:10px;
   font-size:1.5vw;
+  text-shadow: 1px 1px 2px #000000;
 }
 .clocknum {
   font-size:4vw;
@@ -163,18 +169,23 @@ nav{
 #trigger{
   padding-bottom:2vw;
   width:20%;
-  font-size:3vw;
+  font-size:2vw;
+   letter-spacing: 0.3vw;
 }
 
 .menuarticle{
   height:100%;
-  width:33.33333%;
+  width:33.3333%;
   padding:10px;
   color:white;
   background-color:rgb(114, 88, 72);
   border-radius:2vw;
+  font-size:1.5vw;
 }
 
+.menuheader{
+  font-size:3vw;
+}
 /* Round Corners */
 .hvr-round-corners {
   display: inline-block;

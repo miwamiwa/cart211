@@ -63,12 +63,12 @@ function setup(){
   canvas.parent('sketch-holder');
 
   // create p5.sound.js objects
-  drums = new Drum('square');
+  drums = new Drum('sine');
   drums2 = new Drumz('white');
 
   // instrument and music setup
   setupInstruments();
-  launchPart0();
+
   newGearObjects();
   displayGears();
 
@@ -111,29 +111,47 @@ function playSound(){
 
 function displayGears(){
   background(255);
-  phrase.displayNotes();
+
   gearObject0.display();
   gearObject1.display();
   gearObject2.display();
   gearObject3.display();
   gearObject4.display();
   gearObject5.display();
+  phrase.displayNotes();
 }
 
 function newGearObjects(){
+// bottom gears
+  var gear0size = 400*width/height;
+  var gear1size = 300*width/height;
+  // left gears
+  var gear2size = 250*width/height;
+  var gear3size = 250*width/height;
+  // right gears
+  var gear4size = 300*width/height;
+  var gear5size = 250*width/height;
 
-  var gear0size = 0.3*height;
-  var gear1size = 0.65*height;
-  var gear2size = 0.4*height;
-  var gear3size = 0.2*height;
-  var gear4size = 0.44*height;
-  var gear5size = 0.23*height;
-  gearObject0 = new Gear(0.42*width, 0.98*height, 5, gear0size, gear0size);
-  gearObject1 = new Gear(0.615*width, 1.13*height, 4,gear1size, gear1size);
-  gearObject2 = new Gear(0.035*width, 0.05*height, 2, gear2size, gear2size);
-  gearObject3 = new Gear(0.01*width, 0.320*height, 3, gear3size, gear3size);
-  gearObject4 = new Gear(0.965*width, 0.04*height, 0, gear4size, gear4size);
-  gearObject5 = new Gear(0.99*width, 0.34*height, 1, gear5size, gear5size);
+  var gear0xpos = width/2 - 0.15*width;
+  var gear1xpos = width/2 + 0.22*width;
+  var gear2xpos = width/2 - 0.15*width;
+  var gear3xpos = width/2 - 0.4*width;
+  var gear4xpos = width/2 + 0.13*width;
+  var gear5xpos = width/2 + 0.41*width;
+
+  var gear0ypos = height/2 + 0.21*height;
+  var gear1ypos = height/2 + 0.235*height;
+  var gear2ypos = height/2 - 0.30*height;
+  var gear3ypos = height/2 - 0.15 *height;
+  var gear4ypos = height/2 - 0.21*height;
+  var gear5ypos = height/2 - 0.105*height;
+
+  gearObject0 = new Gear(gear0xpos, gear0ypos, 5, gear0size, gear0size);
+  gearObject1 = new Gear(gear1xpos, gear1ypos, 4, gear1size, gear1size);
+  gearObject2 = new Gear(gear2xpos, gear2ypos, 2, gear2size, gear2size);
+  gearObject3 = new Gear(gear3xpos, gear3ypos, 3, gear3size, gear3size);
+  gearObject4 = new Gear(gear4xpos, gear4ypos, 0, gear4size, gear4size);
+  gearObject5 = new Gear(gear5xpos, gear5ypos, 1, gear5size, gear5size);
 }
 
 function windowResized(){
@@ -159,23 +177,15 @@ function setupInstruments(){
   // envelope: function(attackTime, decayTime, releaseTime, attackLevel, susLevel, releaseLevel)
   drums.setEnvelope(0.01, 0.4, 0.8, 0.5, 0.2, 0.0);
   // function(filterType, frequency)
-  drums.setFilter("LP", 2500);
+  drums.setFilter("LP", 4000);
   // function(delayIsOn, length, feedback, filterFrequency)
-  drums.setDelay(true, 0.12, 0.4, 1000);
+  drums.setDelay(true, 0.12, 0.5, 800);
   drums.loadInstrument();
 
   drums2.setEnvelope(0.01, 0.03, 0.2, 0.8, 0.5, 0.0);
-  drums2.setFilter("BP", 400);
+  drums2.setFilter("HP", 400);
   drums2.setDelay(false, 0.15, 0.6, 2000);
   drums2.loadInstrument();
-}
-
-// launchpart0()
-//
-// gives each instrument initial rhythmic weights and sets
-// their rhythmic divisions. starts sound and resets time.
-
-function launchPart0(){
 
   // setup instrument 1
   drums.setDivisions(40, 20, 10, 5, 2, 2, 2);
@@ -185,13 +195,12 @@ function launchPart0(){
 
   // setup instrument 2
   drums2.setDivisions(80, 40, 10, 5, 2, 4, 2);
-  drums2.setWeights(40, 14, 20, 7, 2, 8, 1);
+  drums2.setWeights(40, 18, 25, 10, 8, 8, 3);
   // start sound
   drums2.isPlaying = true;
 
   // reset time
   newPhrase = true;
-
 }
 
 // removeitem()
@@ -251,17 +260,7 @@ function arraySum(array, end){
   return sum;
 }
 
-// checkforempties()
-//
-// check for empty slots in the array, remove those items.
 
-function checkForEmpties(array){
-  for(var i=0; i<array.length; i++){
-    if(array[i]===""){
-      array = removeItem(this.array, i);
-    }
-  }
-}
 
 // mousewheel()
 //
@@ -274,6 +273,10 @@ function mouseWheel(event) {
 
     // scroll clock element value up or down
     currentT[currentlyHovered-1] += event.delta/abs(event.delta);
+    console.log(currentT[1]);
+    if(currentT[1]<1){
+      currentT[1]=12;
+    }
     // update musicInc
     musicInc = framesSinceStart().totalFrames;
     tick = musicInc+60;
@@ -284,3 +287,34 @@ function mouseWheel(event) {
   //uncomment to block page scrolling
   //return false;
 }
+
+// showfunction()
+//
+// displays the menu by increasing opacity to 1
+
+  function showFunction(){
+  	document.getElementById("display_me").style.opacity = 0.8;
+  displaythis = true;
+  }
+
+// hidefunction()
+//
+// hides the menu by decreasing opacity to 0
+
+  function hideFunction(){
+  	document.getElementById("display_me").style.opacity = 0;
+  	displaythis = false;
+  }
+
+// toggleshowhide()
+//
+// toggles between menu display functions
+
+  function toggleShowHide(){
+  	 if(!displaythis){
+  		 showFunction()
+  	 }
+  	 else {
+  		 hideFunction()
+  	 }
+  }
