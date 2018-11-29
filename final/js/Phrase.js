@@ -1,16 +1,16 @@
-function Phrase(noiseSeed){
-  this.scale = new Scale();
+function Phrase(section){
+  this.scale = new Scale(section);
   this.scaleNotes = this.scale.newKey;
-  this.fullScaleNotes = concat(this.scaleNotes, concat(this.scaleNotes, concat(this.scaleNotes, this.scaleNotes)));
-
+      // this.fullScaleNotes = concat(this.scaleNotes, concat(this.scaleNotes, concat(this.scaleNotes, this.scaleNotes)));
+this.fullScaleNotes = this.scale.fullKey;
   this.intervals = [];
   this.directions = [];
   this.directionWeights = [2, 1, 2];
-  this.stepWeight = 5;
-  this.leapWeight = 2;
+  this.stepWeight = floor(map(cos(section*0.00011), -1, 1, 1, 10));
+  this.leapWeight = floor(map(-cos(section*0.0003), -1, 1, 1, 10));
   this.noiseRate = 1;
   this.noiseInc =0;
-  this.noiseSeed =noiseSeed;
+  this.noiseSeed =section;
   this.totalSeeds =5;
 
   this.rootNote = 36;

@@ -1,8 +1,8 @@
-var musicInc=0;
+
 var generating=true;
 var frame=0;
 var scale;
-var phrase;
+
 
 var drums;
 var drums2;
@@ -23,8 +23,6 @@ var musicSpeed = 1;
 var newPhrase = false;
 
 var canvas;
-
-
 var sectionLength = 300;
 
 var divwidth, divheight;
@@ -41,6 +39,7 @@ var gearObject2;
 var gearObject3;
 var gearObject4;
 var gearObject5;
+var lastsection;
 
 function preload() {
 
@@ -56,23 +55,22 @@ function setup(){
 
   var thisdiv = document.getElementById('sketch-holder');
   var divbox = thisdiv.getBoundingClientRect();
-//  console.log(divbox);
+  //  console.log(divbox);
   divwidth = divbox.width;
   divheight =  divbox.height;
   // create "canvas"
   canvas = createCanvas(divwidth, divheight);
   canvas.parent('sketch-holder');
-  newGearObjects();
 
   // create p5.sound.js objects
-  phrase = new Phrase();
   drums = new Drum('square');
   drums2 = new Drumz('white');
 
   // instrument and music setup
   setupInstruments();
   launchPart0();
-    displayGears();
+  newGearObjects();
+  displayGears();
 
 }
 
@@ -107,13 +105,13 @@ function playSound(){
 
   // play each synth
   drums.handleDrums();
-   drums2.handleDrums();
+  drums2.handleDrums();
 
 }
 
 function displayGears(){
-    background(255);
-    phrase.displayNotes();
+  background(255);
+  phrase.displayNotes();
   gearObject0.display();
   gearObject1.display();
   gearObject2.display();
@@ -142,7 +140,7 @@ function windowResized(){
 
   var thisdiv = document.getElementById('sketch-holder');
   var divbox = thisdiv.getBoundingClientRect();
-//  console.log(divbox);
+  //  console.log(divbox);
   divwidth = divbox.width;
   divheight =  divbox.height;
   // create "canvas"
@@ -166,7 +164,7 @@ function setupInstruments(){
   drums.setDelay(true, 0.12, 0.4, 1000);
   drums.loadInstrument();
 
-  drums2.setEnvelope(0.01, 0.03, 0.2, 0.3, 0.5, 0.0);
+  drums2.setEnvelope(0.01, 0.03, 0.2, 0.8, 0.5, 0.0);
   drums2.setFilter("BP", 400);
   drums2.setDelay(false, 0.15, 0.6, 2000);
   drums2.loadInstrument();
@@ -186,14 +184,14 @@ function launchPart0(){
   drums.isPlaying = true;
 
   // setup instrument 2
-  drums2.setDivisions(120, 40, 10, 5, 3, 4, 2);
-  drums2.setWeights(28, 20, 20, 5, 2, 5, 7);
+  drums2.setDivisions(80, 40, 10, 5, 2, 4, 2);
+  drums2.setWeights(40, 14, 20, 7, 2, 8, 1);
   // start sound
   drums2.isPlaying = true;
 
   // reset time
   newPhrase = true;
-  musicInc = 0;
+
 }
 
 // removeitem()

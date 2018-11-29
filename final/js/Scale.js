@@ -7,23 +7,24 @@
 // based on that max patch i made for a class a while ago that generated random newKeys..
 
 
-function Scale(){
+function Scale(section){
 
-  this.minInterval = 1;
-  this.maxInterval = 2;
+  this.minInterval = 1+floor(map(-cos(section*0.00000011), -1, 1, 0, 4));
+  this.maxInterval = 2+floor(map(-cos(section*0.0000001), -1, 1, 0, 4));
 
   this.totalInterval = 0;
   this.kNoiseRate = 1;
-  this.kNoiseSeed = 100;
+  this.kNoiseSeed = section;
   this.kNoiseInc =0;
   this.newKey = [];
+  this.fullKey = [];
   this.stopGenerating = false;
   this.newKeyOctaveSpan = 0;
 
   //  console.log("new newKey");
-    noiseSeed(random(1000));
-
-  while(!this.stopGenerating){
+    noiseSeed(floor(section/400));
+    this.kNoiseInc=0;
+    while(!this.stopGenerating){
 
     this.kNoiseInc += this.kNoiseRate;
 
@@ -54,8 +55,13 @@ function Scale(){
       this.newKeyOctaveSpan = this.totalInterval/12;
     }
   }
-  // print results
-//  console.log("newKeyOctaveSpan :"+this.newKeyOctaveSpan);
-//  console.log("newKey: ")
-//  console.log(this.newKey);
+var newnote=0;
+while(newnote<60){
+for (var i=0; i<this.newKey.length; i++){
+  newnote += this.newKey[i];
+  this.fullKey.push(this.newKey[i]);
+}
+}
+
+
 }

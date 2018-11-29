@@ -187,8 +187,18 @@ Drum.prototype.handleDrums = function(){
   if(this.isPlaying){
 
     var sectionInfo = getSection(musicInc);
+    var section = sectionInfo.currentSection;
+    if(sectionInfo.currentSection!=lastsection){
+    this.barweight = floor(map(-cos(section*0.1), -1, 1, 1, 10));
+    this.beatweight = floor(map(-cos(section*0.2), -1, 1, 1, 10));
+    this.subweight = floor(map(-cos(section*0.3), -1, 1, 1, 10));
+    this.fineweight = floor(map(-cos(section*0.4), -1, 1, 1, 10));
+    this.stimulusScale = floor(map(-cos(section*0.4), -1, 1, 10, 40));
 
+    phrase = new Phrase(sectionInfo.currentSection);
+  }
     noiseSeed(sectionInfo.currentSection);
+    lastsection = sectionInfo.currentSection;
 
     var weight =  this.salience(sectionInfo.framesSinceSection);
     var thisnoise = noise(sectionInfo.framesSinceSection*this.noiseInc);
@@ -262,7 +272,8 @@ Drum.prototype.salience = function(t){
 Drum.prototype.catchUpToNote = function(section, framesince){
   var numIntervals =0;
   var startNote;
-  phrase.lastNote = phrase.fullScaleNotes[phrase.fullScaleNotes.length/2];
+  phrase = new Phrase(section);
+  phrase.lastNote = floor(map(-cos(section*0.031), -1, 1, 0, 12))
 //  console.log("lastNote "+phrase.lastNote)
   noiseSeed(section);
   for (var i=0; i<framesince; i++){

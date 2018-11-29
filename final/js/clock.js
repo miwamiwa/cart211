@@ -13,6 +13,8 @@
 //
 // called upon loading the page. gets the current time and
 // sets the on screen clock
+var phrase;
+var musicInc=0;
 
   function setTime(){
 
@@ -28,10 +30,11 @@
 
   // update frame
   var info = framesSinceStart();
+
   musicInc = info.totalFrames;
   currentSection = info.currentSection;
   framesSinceSection = info.framesSinceSection;
-
+phrase = new Phrase(currentSection);
   // get correct position within section
   //drums.catchUpSection();
 
