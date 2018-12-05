@@ -220,7 +220,7 @@ Drum.prototype.handleDrums = function(){
       updateMenuInfo();
       this.thisSynth.freq(newNote);
     //  console.log("note: "+newNote)
-//     this.env.play();
+ this.env.play();
       this.noteIndex+=1;
     }
 
