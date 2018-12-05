@@ -2,7 +2,7 @@
 var generating=true;
 var frame=0;
 var scale;
-
+var sectionData;
 
 var drums;
 var drums2;
@@ -41,6 +41,8 @@ var gearObject4;
 var gearObject5;
 var lastsection;
 
+var currentMotion=0;
+
 function preload() {
 
   // load images
@@ -52,6 +54,13 @@ function preload() {
 // creates p5.sound.js objects
 
 function setup(){
+  drums = new Drum('square');
+  drums2 = new Drumz('white');
+  setupInstruments();
+
+  sectionData = new Sections(0.9*divheight, divwidth/2);
+  setTime()
+
 
   var thisdiv = document.getElementById('sketch-holder');
   var divbox = thisdiv.getBoundingClientRect();
@@ -61,16 +70,20 @@ function setup(){
   // create "canvas"
   canvas = createCanvas(divwidth, divheight);
   canvas.parent('sketch-holder');
-
-  // create p5.sound.js objects
-  drums = new Drum('sine');
-  drums2 = new Drumz('white');
-
-  // instrument and music setup
-  setupInstruments();
-
   newGearObjects();
   displayGears();
+  sectionData.x = divbox.width*0.5;
+  sectionData.y = divbox.height*0.9;
+
+  // update clock text
+    	tellTime();
+  // create p5.sound.js objects
+
+
+  // instrument and music setup
+
+
+
 
 }
 
@@ -119,32 +132,34 @@ function displayGears(){
   gearObject4.display();
   gearObject5.display();
   phrase.displayNotes();
+  sectionData.update();
+  sectionData.display();
 }
 
 function newGearObjects(){
 // bottom gears
-  var gear0size = 400*width/height;
-  var gear1size = 300*width/height;
+  var gear0size = 250*divwidth/divheight;
+  var gear1size = 250*divwidth/divheight;
   // left gears
-  var gear2size = 250*width/height;
-  var gear3size = 250*width/height;
+  var gear2size = 200*divwidth/divheight;
+  var gear3size = 200*divwidth/divheight;
   // right gears
-  var gear4size = 300*width/height;
-  var gear5size = 250*width/height;
+  var gear4size = 250*divwidth/divheight;
+  var gear5size = 200*divwidth/divheight;
 
-  var gear0xpos = width/2 - 0.15*width;
-  var gear1xpos = width/2 + 0.22*width;
-  var gear2xpos = width/2 - 0.15*width;
-  var gear3xpos = width/2 - 0.4*width;
-  var gear4xpos = width/2 + 0.13*width;
-  var gear5xpos = width/2 + 0.41*width;
+  var gear0xpos = divwidth/2 - 0.15*divwidth;
+  var gear1xpos = divwidth/2 + 0.15*divwidth;
+  var gear2xpos = divwidth/2 - 0.15*divwidth;
+  var gear3xpos = divwidth/2 - 0.4*divwidth;
+  var gear4xpos = divwidth/2 + 0.13*divwidth;
+  var gear5xpos = divwidth/2 + 0.41*divwidth;
 
-  var gear0ypos = height/2 + 0.21*height;
-  var gear1ypos = height/2 + 0.235*height;
-  var gear2ypos = height/2 - 0.30*height;
-  var gear3ypos = height/2 - 0.15 *height;
-  var gear4ypos = height/2 - 0.21*height;
-  var gear5ypos = height/2 - 0.105*height;
+  var gear0ypos = divheight/2 + 0.21*divheight;
+  var gear1ypos = divheight/2 + 0.235*divheight;
+  var gear2ypos = divheight/2 - 0.30*divheight;
+  var gear3ypos = divheight/2 - 0.15 *divheight;
+  var gear4ypos = divheight/2 - 0.21*divheight;
+  var gear5ypos = divheight/2 - 0.105*divheight;
 
   gearObject0 = new Gear(gear0xpos, gear0ypos, 5, gear0size, gear0size);
   gearObject1 = new Gear(gear1xpos, gear1ypos, 4, gear1size, gear1size);
@@ -163,6 +178,7 @@ function windowResized(){
   divheight =  divbox.height;
   // create "canvas"
   canvas = resizeCanvas(divwidth, divheight);
+  sectionData = new Sections(0.9*divheight, divwidth/2);
   newGearObjects();
 
 }
@@ -276,6 +292,7 @@ function mouseWheel(event) {
     console.log(currentT[1]);
     if(currentT[1]<1){
       currentT[1]=12;
+      currentT[0]-=1;
     }
     // update musicInc
     musicInc = framesSinceStart().totalFrames;
@@ -317,4 +334,8 @@ function mouseWheel(event) {
   	 else {
   		 hideFunction()
   	 }
+  }
+
+  function updateMenuInfo(){
+
   }

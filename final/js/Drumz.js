@@ -252,7 +252,7 @@ noiseSeed(520);
     this.filter.freq( 18150-loudness*18000 );
     this.env.setADSR(this.attackTime, loudness*4*this.decayTime, this.susPercent, this.releaseTime);
     this.env.setRange(this.attackLevel, this.releaseLevel);
-    this.env.play();
+  //  this.env.play();
   }
 
 }

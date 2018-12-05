@@ -9,8 +9,8 @@
 
 function Scale(section){
 
-  this.minInterval = 1+floor(map(-cos(section*0.00000011), -1, 1, 0, 4));
-  this.maxInterval = 2+floor(map(-cos(section*0.0000001), -1, 1, 0, 4));
+  this.minInterval = 1+sectionData.minint;
+  this.maxInterval = 2+sectionData.maxint;
 
   this.totalInterval = 0;
   this.kNoiseRate = 1;
@@ -62,7 +62,7 @@ for (var i=0; i<this.newKey.length; i++){
   this.fullKey.push(this.newKey[i]);
 }
 }
- console.log("key length "+this.fullKey.length)
+// console.log("key length "+this.fullKey.length)
 
 
 }

@@ -6,8 +6,8 @@ this.fullScaleNotes = this.scale.fullKey;
   this.intervals = [];
   this.directions = [];
   this.directionWeights = [2, 1, 2];
-  this.stepWeight = floor(map(cos(section*0.00011), -1, 1, 1, 10));
-  this.leapWeight = floor(map(-cos(section*0.0003), -1, 1, 1, 10));
+  this.stepWeight = sectionData.stepweight;
+  this.leapWeight = sectionData.leapweight;
   this.noiseRate = 1;
   this.noiseInc =0;
   this.noiseSeed =section;
@@ -22,12 +22,12 @@ this.fullScaleNotes = this.scale.fullKey;
   //this.newIdeasWeights = [6, 5, 4, 2, 2, 1];
   this.newIdeas = [2, 3, 4, 5, 6, 7];
   this.newIdeasWeights = [
-    floor(map(-cos(section*0.0000012), -1, 1, 1, 10)),
-    floor(map(-cos(section*0.0000013), -1, 1, 1, 10)),
-    floor(map(-cos(section*0.0000014), -1, 1, 1, 10)),
-    floor(map(-cos(section*0.0000015), -1, 1, 1, 10)),
-    floor(map(-cos(section*0.0000016), -1, 1, 1, 10)),
-    floor(map(-cos(section*0.0000017), -1, 1, 1, 10))
+sectionData.ni1weight,
+sectionData.ni2weight,
+sectionData.ni3weight,
+sectionData.ni4weight,
+sectionData.ni5weight,
+sectionData.ni6weight
   ];
 
   this.currentIdeaWeight = 5;
@@ -47,7 +47,8 @@ this.noiseSeed = section;
 
   var chosenInterval =0;
   //console.log("picking new interval");
-  chosenInterval = this.whichInterval();
+  var newdata = this.whichInterval();
+  chosenInterval = newdata.interval;
   var intervalVector = chosenInterval*chosenDirection;
   this.intervals.push(intervalVector);
 
@@ -62,8 +63,15 @@ this.noiseInc = frame;
 
   // DISPLAY NOTES ON SCREEN
 this.displayNotes();
+
+var data = {
+  direction: chosenDirection,
+  interval: chosenInterval,
+  leapOrStep: newdata.leapOrStep,
+  nextNote: this.nextNote,
+}
   // RETURN NOTE
-  return this.nextNote;
+  return data;
 
 }
 
@@ -77,7 +85,7 @@ Phrase.prototype.displayNotes = function(){
 
     var sw =divwidth/arraySum(this.fullScaleNotes, 0);
     var lineLength = 50;
-    var lineX = height*0.75-lineLength/2;
+    var lineX = height*0.64-lineLength/2;
     var scalemin = this.rootNote;
     var scalemax = scalemin + arraySum(this.fullScaleNotes, 0);
 
@@ -122,8 +130,11 @@ Phrase.prototype.whichInterval = function(){
     this.currentIdeasWeights[0]=20;
   }
   var newinterval = this.currentOrNew();
-
-  return newinterval;
+  var result = {
+    interval : newinterval,
+    leapOrStep: motion,
+  }
+  return result;
 }
 
 Phrase.prototype.leapOrStep = function(){
@@ -134,7 +145,7 @@ Phrase.prototype.leapOrStep = function(){
   var portion = 1 / stimDivision;
   var choice=0;
 
-  if(stim<stepWeight*portion){
+  if(stim<this.stepWeight*portion){
 
     choice = "step";
 
@@ -142,7 +153,7 @@ Phrase.prototype.leapOrStep = function(){
 
     choice = "leap";
   }
-  //console.log("motion by: "+choice);
+
   return choice;
 }
 
@@ -222,11 +233,12 @@ Phrase.prototype.whichNewIdea = function(){
 }
 
 Phrase.prototype.whichDirection = function(){
-  this.distanceFromRoot = this.lastNote-64;
-  if(this.distanceFromRoot>40){
+  var middle = arraySum(this.fullScaleNotes, this.fullScaleNotes.length/2);
+  this.distanceFromRoot = this.lastNote-middle;
+  if(this.distanceFromRoot>middle/2){
     this.directionWeights = [5, 3, 3];
   }
-  else if (this.distanceFromRoot<-40){
+  else if (this.distanceFromRoot<-middle/2){
     this.directionWeights = [1, 1, 5];
   }
   else{

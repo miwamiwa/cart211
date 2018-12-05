@@ -40,8 +40,7 @@ tick = musicInc+60;
   // get correct position within section
   //drums.catchUpSection();
 
-// update clock text
-  	tellTime();
+
   }
 
 

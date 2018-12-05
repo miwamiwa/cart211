@@ -189,31 +189,6 @@ Drum.prototype.handleDrums = function(){
     var sectionInfo = getSection(musicInc);
     var section = sectionInfo.currentSection;
     if(sectionInfo.currentSection!=lastsection){
-    this.barweight = floor(map(-cos(section*0.1), -1, 1, 1, 10));
-    this.beatweight = floor(map(-cos(section*0.2), -1, 1, 1, 10));
-    this.subweight = floor(map(-cos(section*0.3), -1, 1, 1, 10));
-    this.fineweight = floor(map(-cos(section*0.4), -1, 1, 1, 10));
-    this.stimulusScale = floor(map(-cos(section*0.4), -1, 1, 20, 40));
-    this.bar = floor(map(sin(section*0.0001), -1, 1, 20, 100));
-    this.beat = floor(map(sin(section*0.0002), -1, 1, 10, 50));
-    this.subdiv = floor(map(sin(section*0.0003), -1, 1, 3, 30));
-    this.finediv = floor(map(sin(section*0.0004), -1, 1, 1, 10));
-    this.divperbar = floor(this.bar/this.beat)
-    this.divperbeat = floor(this.beat/this.subdiv)
-    this.divpersub = floor(this.subdiv/this.finediv)
-
-    drums2.bar = this.bar;
-    drums2.beat = this.beat;
-    drums2.subdiv = this.subdiv;
-    drums2.finediv = this.finediv;
-    drums2.divperbar = this.divperbar;
-    drums2.divperbeat = this.divperbeat;
-    drums2.divpersub = this.divpersub;
-    drums2.barweight = floor(map(-cos(section*0.1), -1, 1, 4, 12));
-    drums2.beatweight = floor(map(-cos(section*0.2), -1, 1, 3, 12));
-    drums2.subweight = floor(map(-cos(section*0.3), -1, 1, 1, 12));
-    drums2.fineweight = floor(map(-cos(section*0.4), -1, 1, 1, 12));
-    drums2.stimulusScale = floor(map(-cos(section*0.4), -1, 1, 10, 20));
 
     phrase = new Phrase(sectionInfo.currentSection);
   }
@@ -226,6 +201,8 @@ Drum.prototype.handleDrums = function(){
     //console.log("stimulus 1"+stimulus);
 
     if(stimulus+weight>this.thresh&&weight!=0){
+      sectionData.update();
+      sectionData.display();
 
     //var loudness = map(stimulus+weight, 0, this.stimulusScale+this.maxWeight, 0, 1);
     //  loudness = constrain(loudness, 0, 1);
@@ -236,13 +213,14 @@ Drum.prototype.handleDrums = function(){
       var incomingnote = this.catchUpToNote(sectionInfo.currentSection, sectionInfo.framesSinceSection);
     //  console.log("incoming note "+incomingnote);
       this.note = incomingnote;
+
       //this.note = phrase.newNote(sectionInfo.currentSection, sectionInfo.framesSinceSection);
       var newNote =midiToFreq(constrain(this.note, 0, 127));
     //  console.log("THE NEW NOTE IS : "+newNote);
-
+      updateMenuInfo();
       this.thisSynth.freq(newNote);
     //  console.log("note: "+newNote)
-      this.env.play();
+//     this.env.play();
       this.noteIndex+=1;
     }
 
@@ -293,7 +271,7 @@ Drum.prototype.catchUpToNote = function(section, framesince){
   var numIntervals =0;
   var startNote;
   phrase = new Phrase(section);
-  phrase.lastNote = floor(map(-cos(section*0.031), -1, 1, 0, 12))
+  phrase.lastNote = floor(map(-cos(section*0.031), -1, 1, 1, phrase.fullScaleNotes.length))
 //  console.log("lastNote "+phrase.lastNote)
   noiseSeed(section);
   for (var i=0; i<framesince; i++){
@@ -301,10 +279,13 @@ Drum.prototype.catchUpToNote = function(section, framesince){
     var thisnoise = noise(i*this.noiseInc);
     var stimulus = thisnoise*this.stimulusScale;
     if(stimulus+weight>this.thresh&&weight!=0){
-    startNote = phrase.newNote(section, i);
+      var info = phrase.newNote(section, i);
+    startNote = info.nextNote;
+    currentMotion = info;
   //  console.log("start note "+startNote)
     }
   }
+  updateMenuInfo();
   return startNote;
 }
 

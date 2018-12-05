@@ -67,20 +67,22 @@ div{
 }
 
 section button, article{
-  width: 100%;
+width:100%;
   text-align: center;
 }
 button{
-  font-size:3vw;
+  font-size:2vw;
   color: rgb(101, 122, 120);
   background-color: rgb(227, 242, 240);
-  /*
-  */
   height: 4vw;
   border-radius:1vw;
   border:3px solid rgb(166, 193, 191);
-
 }
+h2 {
+  font-size:1vw;
+  width:20%;
+}
+
 nav{
 
   height:100%;
@@ -90,7 +92,7 @@ nav{
 .clocktext {
   padding:10px;
   font-size:1.5vw;
-  text-shadow: 1px 1px 2px #000000;
+  text-shadow: 1px 1px 1px #000000;
 }
 .clocknum {
   font-size:4vw;
@@ -100,7 +102,7 @@ nav{
 
 #clocksection{
 
-  flex-basis: 50%;
+  flex-basis: 40%;
   width:80%;
   align-self:center;
   /*
@@ -170,17 +172,40 @@ nav{
   padding-bottom:2vw;
   width:20%;
   font-size:2vw;
+  letter-spacing: 0.3vw;
+}
+
+#resettime{
+  height:4vh;
+  padding:5px 0;
+  width:100%;
+  font-size:1vw;
    letter-spacing: 0.3vw;
 }
 
 .menuarticle{
-  height:100%;
+
   width:33.3333%;
+
   padding:10px;
   color:white;
   background-color:rgb(114, 88, 72);
   border-radius:2vw;
   font-size:1.5vw;
+
+  display: flex;
+  align-content: space-between;
+  justify-content:center;
+  flex-wrap: wrap;
+  height:100%;
+/*  align-items: flex-start;
+*/
+}
+.infoarticle{
+  font-size:1vw;
+  width:20%;
+  height:1vh;
+  margin:0.5vw;
 }
 
 .menuheader{
