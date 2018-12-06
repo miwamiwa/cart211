@@ -54,7 +54,7 @@ function preload() {
 // creates p5.sound.js objects
 
 function setup(){
-  drums = new Drum('square');
+  drums = new Drum('sine');
   drums2 = new Drumz('white');
   setupInstruments();
 
