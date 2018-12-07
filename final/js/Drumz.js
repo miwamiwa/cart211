@@ -1,29 +1,7 @@
 /*
-
-Drumzs.js
-This is what the three synths in the bgm are made of.
-
-this script handles:
-- creating a Synth object
-- setting the envelope
-- setting the filter
-- setting the delay effect
-- setting the notes to be played
-- putting the oscillator, envelope, filter and delay together and starting the sound
-- playing this synth's list of notes
-
-Envelope, filter, delay settings and note lists are declared in the main script.
-
+this is the noise drum
 */
 
-// starting key midi value
-var rootNote=60;
-
-// Synth(oscType)
-//
-// creates a synth object.
-// everything is set to 0. Parameters are assigned in the functions that follow.
-// required argument: oscillator type (square, sine, triangle)
 
 function Drumz(oscType){
   // declare type of synth; and type of filter
@@ -49,57 +27,33 @@ function Drumz(oscType){
   this.delayLength=0;
   this.delayFB= 0;
   this.delayFilter= 0;
-
-    this.beat=40;
-
-    this.strongbeatdivision=2;
-    this.strongsubdivision=2;
-
-    this.divperbar=2;
-    this.divperbeat=2;
-    this.divpersub=5;
-
-    this.barperphrase=1;
-    this.phrasepersection=1;
-    this.bar=80;
-    this.subdiv=20;
-    this.finediv=4;
-
-//    bar=this.beat*this.divperbar;
-//    subdiv=this.beat/this.divperbeat;
-//    finediv=this.subdiv/this.divpersub;
-
-/*
-this could use some functions to set parameters. that way we can have different drums going.
-setweights()
-setbarbeatdivlength()
-sethresh and stimulusscale()
-setfilterfreqrange()
-
-*/
-    this.barweight=0;
-    this.beatweight=0;
-    this.subweight=0;
-    this.fineweight=0;
-
-    this.strongbeatweight=0;
-    this.strongsubweight=0;
-
-    this.phrase=0;
-    this.section=0;
-    this.currentbeat=0;
-    this.currentsub=0;
-
-    this.maxWeight= 0;
-    this.stimulusScale= 0;
-    this.thresh= 0;
-//    maxWeight=this.barweight+this.beatweight+this.subweight+this.fineweight+this.strongbeatweight+this.strongsubweight;
-//    stimulusScale=1.5*this.maxWeight;
-//    thresh=0.25*(this.maxWeight+this.stimulusScale);
-    this.noiseInc = 0.11;
-    this.maxloudness=2;
-
-
+  // rhythm, time
+  this.beat=40;
+  this.strongbeatdivision=2;
+  this.strongsubdivision=2;
+  this.divperbar=2;
+  this.divperbeat=2;
+  this.divpersub=5;
+  this.barperphrase=1;
+  this.phrasepersection=1;
+  this.bar=80;
+  this.subdiv=20;
+  this.finediv=4;
+  this.barweight=0;
+  this.beatweight=0;
+  this.subweight=0;
+  this.fineweight=0;
+  this.strongbeatweight=0;
+  this.strongsubweight=0;
+  this.phrase=0;
+  this.section=0;
+  this.currentbeat=0;
+  this.currentsub=0;
+  this.maxWeight= 0;
+  this.stimulusScale= 0;
+  this.thresh= 0;
+  this.noiseInc = 0.11;
+  this.maxloudness=2;
 }
 
 //////////////// ASSIGN SETTINGS ////////////////
@@ -142,15 +96,21 @@ Drumz.prototype.setDelay = function(delayIsOn, length, feedback, filterFrequency
   this.delayFB= feedback;
   this.delayFilter= filterFrequency;
 }
- Drumz.prototype.setDivisions = function(bar, beat, subdiv, finediv, beatsperbar, divsperbeat, fineperdiv){
-   this.bar = bar;
-   this.beat = beat;
-   this.subdiv = subdiv;
-   this.finediv = finediv;
-   this.divperbar = beatsperbar;
-   this.divperbeat = divsperbeat;
-   this.divpersub = fineperdiv;
- }
+
+// sets rhythmic division lengths
+
+Drumz.prototype.setDivisions = function(bar, beat, subdiv, finediv, beatsperbar, divsperbeat, fineperdiv){
+  this.bar = bar;
+  this.beat = beat;
+  this.subdiv = subdiv;
+  this.finediv = finediv;
+  this.divperbar = beatsperbar;
+  this.divperbeat = divsperbeat;
+  this.divpersub = fineperdiv;
+}
+
+// set weight or chance to play rhythmic division.
+
 Drumz.prototype.setWeights = function(maxWeight, stimScale, threshold, barweight, beatweight, subweight, fineweight){
   this.maxWeight = maxWeight;
   this.stimulusScale = stimScale;
@@ -220,44 +180,40 @@ Drumz.prototype.loadInstrument = function(){
   }
 }
 
+// handledrums()
+// plays drums using weight system
+
 Drumz.prototype.handleDrums = function(){
 
   if(this.isPlaying){
-  if(musicInc%this.bar*this.barperphrase){
-    this.phrase+=1;
+    if(musicInc%this.bar*this.barperphrase){
+      this.phrase+=1;
+    }
+    if(this.phrase%this.phrasepersection){
+      this.section+=1;
+      this.phrase=0;
+      console.log("section :"+this.section);
+    }
+
+    noiseSeed(520);
+    var weight =  this.salience(musicInc);
+    var thisnoise = noise(musicInc*this.noiseInc);
+    var stimulus = thisnoise*this.stimulusScale;
+
+    if(stimulus+weight>this.thresh&&weight!=0){
+
+      var loudness = map(stimulus+weight, 0, this.stimulusScale+this.maxWeight, 0, 1);
+      loudness = constrain(loudness, 0, 1);
+      this.filter.freq( 18150-loudness*18000 );
+      this.env.setADSR(this.attackTime, loudness*4*this.decayTime, this.susPercent, this.releaseTime);
+      this.env.setRange(this.attackLevel, this.releaseLevel);
+      this.env.play();
+    }
   }
-  if(this.phrase%this.phrasepersection){
-    this.section+=1;
-    this.phrase=0;
-    console.log("section :"+this.section);
-
-  }
-noiseSeed(520);
-  var weight =  this.salience(musicInc);
-
-  // uncomment this to get the same drum line every time
-  //noiseSeed(this.section);
-
-
-  var thisnoise = noise(musicInc*this.noiseInc);
-  var stimulus = thisnoise*this.stimulusScale;
-//console.log("stimulus 2"+stimulus);
-  if(stimulus+weight>this.thresh&&weight!=0){
-
-    var loudness = map(stimulus+weight, 0, this.stimulusScale+this.maxWeight, 0, 1);
-    loudness = constrain(loudness, 0, 1);
-  //  console.log("stimulus: "+stimulus);
-  //  console.log("loudness: "+loudness);
-
-    this.filter.freq( 18150-loudness*18000 );
-    this.env.setADSR(this.attackTime, loudness*4*this.decayTime, this.susPercent, this.releaseTime);
-    this.env.setRange(this.attackLevel, this.releaseLevel);
-   this.env.play();
-  }
-
 }
 
-}
+// salience()
+// returns weight to be added to this frame's stimulus based on rhythmic salience
 
 Drumz.prototype.salience = function(t){
 
@@ -267,7 +223,6 @@ Drumz.prototype.salience = function(t){
       this.currentbeat=0;
     }
   }
-
   if(musicInc%this.subdiv===0){
     this.currentsub+=1;
     if(this.currentbeat>this.divperbeat){

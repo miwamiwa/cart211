@@ -1,37 +1,38 @@
-
-var generating=true;
-var frame=0;
+// objects
+var drums;
+var drums2;
 var scale;
 var sectionData;
 
-var drums;
-var drums2;
-var rootNote =50;
-// weights
+// canvas
+var canvas;
+var divwidth, divheight;
 
+// clock
+var currentT = [6];
+var frame=0;
+var lastClockValue = []
+var lastsection =0;
+var currentSection;
+var framesSinceSection;
+var currentlyHovered=0;
+
+// music
+var rootNote =50;
+var musicInc = 0;
+var musicSpeed = 1;
+var newPhrase = false;
 var scaleToneWeight=0;
 var passingToneWeight=0;
-
 var moveUpWeight =0;
 var moveDownWeight = 0;
 var moveNotWeight =0;
 var leapWeight =0;
 var stepWeight =0;
-
-var musicInc = 0;
-var musicSpeed = 1;
-var newPhrase = false;
-
-var canvas;
 var sectionLength = 300;
+var currentMotion=0;
 
-var divwidth, divheight;
-var pos=[6];
-
-var   currentSection;
-var  framesSinceSection;
-var lastClockValue = []
-
+// images
 var gearPic;
 var gearObject0;
 var gearObject1;
@@ -39,52 +40,49 @@ var gearObject2;
 var gearObject3;
 var gearObject4;
 var gearObject5;
-var lastsection;
 
-var currentMotion=0;
+// preload()
+//
+// load images
 
 function preload() {
 
-  // load images
   gearPic = loadImage("images/gear.png");
 }
 
 // setup()
 //
-// creates p5.sound.js objects
+// initialize settings on load.
 
 function setup(){
+
+  // load instruments
   drums = new Drum('sine');
   drums2 = new Drumz('white');
   setupInstruments();
 
+  // load Sections object
   sectionData = new Sections(0.9*divheight, divwidth/2);
+  // get time since start of piece
   setTime()
 
-
+  // scale canvas
   var thisdiv = document.getElementById('sketch-holder');
   var divbox = thisdiv.getBoundingClientRect();
-  //  console.log(divbox);
   divwidth = divbox.width;
   divheight =  divbox.height;
-  // create "canvas"
   canvas = createCanvas(divwidth, divheight);
   canvas.parent('sketch-holder');
+
+  // load gears
   newGearObjects();
   displayGears();
+
   sectionData.x = divbox.width*0.5;
   sectionData.y = divbox.height*0.9;
 
   // update clock text
-    	tellTime();
-  // create p5.sound.js objects
-
-
-  // instrument and music setup
-
-
-
-
+  tellTime();
 }
 
 // draw()
@@ -93,12 +91,10 @@ function setup(){
 
 function draw(){
 
-
   // play sound
   playSound();
   // run clock
   updateTime();
-
 
 }
 
@@ -108,10 +104,9 @@ function draw(){
 
 function playSound(){
 
-  // increment time (frames)
+  // increment time
   if(!newPhrase){
     musicInc+=musicSpeed;
-    //  console.log("musicInc: "+musicInc)
   } else {
     newPhrase=false;
   }
@@ -119,12 +114,15 @@ function playSound(){
   // play each synth
   drums.handleDrums();
   drums2.handleDrums();
-
 }
 
-function displayGears(){
-  background(255);
+// displaygears()
+//
+// display background and gears.
 
+function displayGears(){
+
+  background(255);
   gearObject0.display();
   gearObject1.display();
   gearObject2.display();
@@ -136,8 +134,10 @@ function displayGears(){
   sectionData.display();
 }
 
+// set gear size and position
+
 function newGearObjects(){
-// bottom gears
+  // bottom gears
   var gear0size = 250*divwidth/divheight;
   var gear1size = 250*divwidth/divheight;
   // left gears
@@ -169,14 +169,14 @@ function newGearObjects(){
   gearObject5 = new Gear(gear5xpos, gear5ypos, 1, gear5size, gear5size);
 }
 
+// resize canvas on page resize. greates new gear objects too.
+
 function windowResized(){
 
   var thisdiv = document.getElementById('sketch-holder');
   var divbox = thisdiv.getBoundingClientRect();
-  //  console.log(divbox);
   divwidth = divbox.width;
   divheight =  divbox.height;
-  // create "canvas"
   canvas = resizeCanvas(divwidth, divheight);
   sectionData = new Sections(0.9*divheight, divwidth/2);
   newGearObjects();
@@ -203,12 +203,10 @@ function setupInstruments(){
   drums2.setDelay(false, 0.15, 0.6, 2000);
   drums2.loadInstrument();
 
-  // setup instrument 1
   drums.setDivisions(40, 20, 10, 5, 2, 2, 2);
   drums.setWeights(18, 35, 30, 20, 5, 5, 5);
   // start sound
   drums.isPlaying = true;
-
   // setup instrument 2
   drums2.setDivisions(80, 40, 10, 5, 2, 4, 2);
   drums2.setWeights(40, 18, 25, 10, 8, 8, 3);
@@ -309,33 +307,41 @@ function mouseWheel(event) {
 //
 // displays the menu by increasing opacity to 1
 
-  function showFunction(){
-  	document.getElementById("display_me").style.opacity = 0.8;
+function showFunction(){
+  document.getElementById("display_me").style.opacity = 1;
   displaythis = true;
-  }
+}
 
 // hidefunction()
 //
 // hides the menu by decreasing opacity to 0
 
-  function hideFunction(){
-  	document.getElementById("display_me").style.opacity = 0;
-  	displaythis = false;
-  }
+function hideFunction(){
+  document.getElementById("display_me").style.opacity = 0;
+  displaythis = false;
+}
 
 // toggleshowhide()
 //
 // toggles between menu display functions
 
-  function toggleShowHide(){
-  	 if(!displaythis){
-  		 showFunction()
-  	 }
-  	 else {
-  		 hideFunction()
-  	 }
+function toggleShowHide(){
+  if(!displaythis){
+    showFunction()
   }
-
-  function updateMenuInfo(){
-
+  else {
+    hideFunction()
   }
+}
+
+function updateMenuInfo(){
+
+}
+
+// selecthoverarea()
+//
+// indicates which dial is hovered by mouse.
+
+function selecthoverarea(x){
+  currentlyHovered = x;
+}

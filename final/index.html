@@ -2,6 +2,7 @@
 <html>
 
 <head>
+
   <link rel="stylesheet" href="css/hwcss.css">
   <meta charset="UTF-8">
 
@@ -18,25 +19,20 @@
   <script src="js/Scale.js"></script>
   <script src="js/Sections.js"></script>
 
-
-  <title>final werk</title>
+  <title> sam's final project </title>
 </head>
 
 <body onload="">
 
-
+  <!-- TITLE SECTION -->
 
   <section id="topsection" onmouseover=selecthoverarea(0)>
-    <!--
-    <article class="hvr-underline-from-left">current time: </article>
-    <article id="timeinuse" class="hvr-underline-from-left">x</article>
-  -->
-
-  <article>
-    music for the internet
-  </article>
+    <article>
+      music for the internet
+    </article>
   </section>
 
+  <!-- CLOCK SECTION -->
 
   <section id="clocksection">
 
@@ -81,54 +77,95 @@
       <article id="s" class="clocknum">0</article>
       <button onclick=adjustTime(-1,5) class="hvr-round-corners">-</button>
     </div>
-
-
   </section>
 
   <section id="sketchsection" onmouseover=selecthoverarea(0)>
-
+    <!-- imaginary section that acts to push the clock up a little bit -->
   </section>
-  <section id="menusection" onmouseover=selecthoverarea(0)>
 
+  <!-- MENU SECTION -->
+  <section id="menusection" onmouseover=selecthoverarea(0)>
     <article id="display_me">
       <article class="menuarticle hvr-round-corners">
-      <h1 class="menuheader"> intro </h1> 
+        <h1 class="menuheader"> About </h1>
+
+        Music for the Internet is a generative music piece that varies over time and
+        stretches to infinity.
+        <br><h1 class="menuheader"></h1>
+        Upon loading the page you hear what has become of the piece since its starting
+        point at at 22:30 hours October 29, 1969, the date of the first message
+        transmitted on ARPANET.
+        <br><h1 class="menuheader"></h1>
+        Press the "+" and "-" buttons to control time, or place your cursor
+        over a dial and use your mouse wheel for broad control.
+        <br><h1 class="menuheader"></h1>
+        Press on "reset time" to return to current time.
+        <br><h1 class="menuheader"></h1>
+        Below the clock the 127 notes of the midi scale are displayed in a light blue.
+        Scale notes are displayed in a dark blue. The note currently playing is displayed in red.
+        <br><h1 class="menuheader"></h1>
+        At the bottom, the main structural settings are displayed.
       </article>
-      <article class="menuarticle hvr-round-corners"> controls </article>
-      <article class="menuarticle ">
+      <article class="menuarticle hvr-round-corners">
+        <h1 class="menuheader"> Rhythm </h1>
+        This code uses a p5.js loop. At every loop frame, a new stimulus
+        (random number between 0 and the max stimulus value) is generated.
+        <br><h1 class="menuheader"></h1>
+        Then, I check if the current frame lands on a rhythmic value
+        (bar, beat, subdiv, finediv). If it does, this rhythmic value's weight
+        (or "chance") is added to the stimulus value.
+        <br><h1 class="menuheader"></h1>
+        If:  ( stimulus + weight ) > play threshold, a note is triggered.
+        <h1 class="menuheader"> Scale </h1>
+        Scales are generated as stacks of random intervals. Each random interval is constrained
+        within a minimum and maximum size. A scale is fully generated once it reaches a
+        note which is one or more octaves above the root note.
+      </article>
 
+      <article class="menuarticle hvr-round-corners">
+        <h1 class="menuheader"> Pitch </h1>
 
-
-        <button id="resettime" onclick=setTime() class="hvr-round-corners">reset to actual time</button>
+        Every new note trigger, my code picks a new interval and direction in order
+        to pick the next scale pitch to play.
+        <br><h1 class="menuheader"></h1>
+        Intervals are picked either from a list of intervals played since the
+        start of the last section, or from a list of intervals not yet explored.
+        <br> The chosen interval is random, but once again numbers are skewed
+        following each interval's weight ("chance").
+        <br><h1 class="menuheader"></h1>
+        Each section has an arbitrary
+        (though also varying) start note in order to avoid having to keep track of
+        every interval since the start of the piece every time a time unit is
+        updated by the user.
+        <br><h1 class="menuheader"></h1>
+        By picking from either old or new intervals, I'm trying to add a bit of
+        intervallic relatedness within the
+        random phrases in order to make them sound more like.. phrases. Other than that,
+        this is a deliberatly loose structure, to allow the fluctuation of its settings.
+        <button id="closeit" onclick="hideFunction()">x</button>
       </article>
     </article>
 
-    <button id="trigger" onclick="toggleShowHide()"> menu </button>
-
+    <button id="resettime" onclick=setTime() class="hvr-round-corners">reset time</button>
+    <button id="trigger" onclick="toggleShowHide()"> about </button>
   </section>
 
+  <!-- a div to host the p5.js script -->
   <div id="sketch-holder">
   </div>
 
+  <!-- assign clock dials to variables -->
   <script>
 
   var clockT = [6];
-  var currentT = [6];
-  var currentlyHovered=0;
+  clockT[0] =  document.getElementById("y");
+  clockT[1] =  document.getElementById("mo");
+  clockT[2] =  document.getElementById("d");
+  clockT[3] =  document.getElementById("h");
+  clockT[4] =  document.getElementById("mi");
+  clockT[5] =  document.getElementById("s");
 
-    clockT[0] =  document.getElementById("y");
-    clockT[1] =  document.getElementById("mo");
-    clockT[2] =  document.getElementById("d");
-    clockT[3] =  document.getElementById("h");
-    clockT[4] =  document.getElementById("mi");
-    clockT[5] =  document.getElementById("s");
-
-  var timeInUse = document.getElementById("timeinuse");
-
-  function selecthoverarea(x){
-    currentlyHovered = x;
-  }
-  </script>
+</script>
 
 </body>
 </html>

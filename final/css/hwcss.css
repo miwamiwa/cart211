@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand|Gabriela');
 
 /*
-colour palette
+colours
 
 bleu-blanc
 rgb(227, 242, 240);
@@ -25,6 +25,7 @@ brun-noir
 rgb(53, 36, 26);
 
 */
+
 *{
   margin:0;
   padding:0;
@@ -34,42 +35,38 @@ rgb(53, 36, 26);
 }
 
 html, body{
-  /*background-color: white;
-  */
   width:100%;
   height:95%;
   display:flex;
   flex-direction: column;
   justify-content:space-around;
-
 }
+
 section{
-  /* padding:1vh 5vw;  */
   display: flex;
   height:40%;
   width:100%;
   flex-flow: row nowrap;
   align-content:space-around;
   color: rgb(114, 88, 72);
-  /* font-family: 'Quicksand', sans-serif; */
 }
+
 div{
-  /* padding:10px;   */
   display: flex;
   flex-flow: column nowrap;
   margin:1vw;
   width: 100%;
   height: 100%;
-
   justify-content: space-evenly;
   align-content: space-around;
   text-align: center;
 }
 
 section button, article{
-width:100%;
+  width:100%;
   text-align: center;
 }
+
 button{
   font-size:2vw;
   color: rgb(101, 122, 120);
@@ -78,70 +75,55 @@ button{
   border-radius:1vw;
   border:3px solid rgb(166, 193, 191);
 }
+
 h2 {
   font-size:1vw;
   width:20%;
 }
 
 nav{
-
   height:100%;
   width:100%;
-
 }
+
 .clocktext {
   padding:10px;
   font-size:1.5vw;
   text-shadow: 1px 1px 1px #000000;
 }
+
 .clocknum {
   font-size:4vw;
-
 }
 
 
 #clocksection{
-
   flex-basis: 40%;
   width:80%;
   align-self:center;
-  /*
-  background-color: red;
-  opacity: 0.5;
-  */
   padding-bottom:2vw;
 }
+
 #topsection{
   font-size:5vw;
-  /* padding-top:5vh; */
   flex-basis: 20%;
-  /*
-  background-color: blue;
-  opacity: 0.5;
-  */
   padding:1vw
 }
+
 #menusection{
   position:fixed;
   bottom:0;
   display: flex;
   flex-direction:column;
   justify-content:center;
-  flex-basis: 30%;
-  /*
-  background-color: green;
-  opacity: 0.5;
-  */
-
+  flex-basis: 40%;
 }
+
 #sketchsection{
   width:100%;
-  /*
-  background-color: purple;
-  opacity: 0.5;
-  */
   padding:0 0px;
 }
+
 #sketch-holder{
   margin:0;
   padding:0;
@@ -151,17 +133,15 @@ nav{
   height:100%;
   width:100%;
   z-index:-99;
-
 }
+
 #display_me{
   height:100%;
   width:100%;
   border-radius:3vw;
   opacity:0;
   transition: all .5s;
-  /*	position:fixed  */
   border-radius: 10px;
-  /*  background: #333; */
   font-size: 2vmin;
   font-family: Arial;
   display:flex;
@@ -169,38 +149,59 @@ nav{
 }
 
 #trigger{
-  padding-bottom:2vw;
-  width:20%;
+  padding:5px 0;
+  width:15%;
   font-size:2vw;
   letter-spacing: 0.3vw;
+  background-color:rgb(114, 88, 72);
+  color:white;
+  border:3px solid rgb(53, 36, 26);
+  position:fixed;
+  top:0;
+  left:0;
+}
+
+#closeit{
+  padding:0;
+  margin:0;
+  width:15%;
+  font-size:1vw;
+  background-color:rgb(114, 88, 72);
+  color:white;
+  border:3px solid rgb(53, 36, 26);
+  position:fixed;
+  bottom:95%;
+  right:0;
 }
 
 #resettime{
-  height:4vh;
   padding:5px 0;
-  width:100%;
-  font-size:1vw;
-   letter-spacing: 0.3vw;
+  width:15%;
+  font-size:2vw;
+  top:0;
+  right:0;
+  position:fixed;
+  letter-spacing: 0.3vw;
+  background-color:rgb(114, 88, 72);
+  color:white;
+  border:3px solid rgb(53, 36, 26);
 }
 
 .menuarticle{
-
   width:33.3333%;
-
   padding:10px;
   color:white;
-  background-color:rgb(114, 88, 72);
+  background-color:rgba(114, 88, 72, 0.9);
   border-radius:2vw;
-  font-size:1.5vw;
-
+  font-size:1.9vh;
+  text-align:left;
   display: flex;
   align-content: space-between;
   justify-content:center;
   flex-wrap: wrap;
   height:100%;
-/*  align-items: flex-start;
-*/
 }
+
 .infoarticle{
   font-size:1vw;
   width:20%;
@@ -209,8 +210,11 @@ nav{
 }
 
 .menuheader{
-  font-size:3vw;
+  font-size:1.3vw;
+  text-align:center;
+  padding-bottom:5px;
 }
+
 /* Round Corners */
 .hvr-round-corners {
   display: inline-block;

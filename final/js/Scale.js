@@ -11,7 +11,6 @@ function Scale(section){
 
   this.minInterval = 1+sectionData.minint;
   this.maxInterval = 2+sectionData.maxint;
-
   this.totalInterval = 0;
   this.kNoiseRate = 1;
   this.kNoiseSeed = section;
@@ -21,21 +20,17 @@ function Scale(section){
   this.stopGenerating = false;
   this.newKeyOctaveSpan = 0;
 
-  //  console.log("new newKey");
-    noiseSeed(floor(section/400));
-    this.kNoiseInc=0;
-    while(!this.stopGenerating){
+  noiseSeed(floor(section/400));
+  this.kNoiseInc=0;
+  while(!this.stopGenerating){
 
     this.kNoiseInc += this.kNoiseRate;
-
     this.thisInterval = 0;
     this.noteChoice =0;
     this.possibleIntervals = this.maxInterval - this.minInterval + 1;
 
     this.noiseResult = noise(this.kNoiseInc);
     this.noiseSec = 1/this.possibleIntervals;
-
-    //console.log("noiseResult: "+this.noiseResult);
 
     // the following for() loop makes a choice using noiseResult
     for (var i=0; i< this.possibleIntervals; i++){
@@ -55,14 +50,11 @@ function Scale(section){
       this.newKeyOctaveSpan = this.totalInterval/12;
     }
   }
-var newnote=0;
-while(newnote<60){
-for (var i=0; i<this.newKey.length; i++){
-  newnote += this.newKey[i];
-  this.fullKey.push(this.newKey[i]);
-}
-}
-// console.log("key length "+this.fullKey.length)
-
-
+  var newnote=0;
+  while(newnote<60){
+    for (var i=0; i<this.newKey.length; i++){
+      newnote += this.newKey[i];
+      this.fullKey.push(this.newKey[i]);
+    }
+  }
 }

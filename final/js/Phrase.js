@@ -1,8 +1,10 @@
+/*
+This is where the current scale is saved, and where new notes are generated.
+*/
 function Phrase(section){
   this.scale = new Scale(section);
   this.scaleNotes = this.scale.newKey;
-      // this.fullScaleNotes = concat(this.scaleNotes, concat(this.scaleNotes, concat(this.scaleNotes, this.scaleNotes)));
-this.fullScaleNotes = this.scale.fullKey;
+  this.fullScaleNotes = this.scale.fullKey;
   this.intervals = [];
   this.directions = [];
   this.directionWeights = [2, 1, 2];
@@ -12,64 +14,58 @@ this.fullScaleNotes = this.scale.fullKey;
   this.noiseInc =0;
   this.noiseSeed =section;
   this.totalSeeds =5;
-
   this.rootNote = 36;
   this.lastNote =63;
   this.notes = [this.lastNote];
   this.currentIdeas = [1];
   this.currentIdeasWeights = [10];
-  //this.newIdeas = [2, 3, 4, 5, 6, 7];
-  //this.newIdeasWeights = [6, 5, 4, 2, 2, 1];
   this.newIdeas = [2, 3, 4, 5, 6, 7];
   this.newIdeasWeights = [
-sectionData.ni1weight,
-sectionData.ni2weight,
-sectionData.ni3weight,
-sectionData.ni4weight,
-sectionData.ni5weight,
-sectionData.ni6weight
+    sectionData.ni1weight,
+    sectionData.ni2weight,
+    sectionData.ni3weight,
+    sectionData.ni4weight,
+    sectionData.ni5weight,
+    sectionData.ni6weight
   ];
-
   this.currentIdeaWeight = 5;
   this.newIdeaWeight =1;
   this.nextNote = 0;
   this.distanceFromRoot =this.rootNote;
-
   this.maxDistance =50;
 }
 
+// newnote()
+// generate an interval to add to the last note
+
 Phrase.prototype.newNote = function(section, frame){
-this.noiseSeed = section;
+
+  this.noiseSeed = section;
 
   var chosenDirection = 0;
   chosenDirection = this.whichDirection();
   this.directions.push(chosenDirection);
 
   var chosenInterval =0;
-  //console.log("picking new interval");
   var newdata = this.whichInterval();
   chosenInterval = newdata.interval;
   var intervalVector = chosenInterval*chosenDirection;
   this.intervals.push(intervalVector);
-
-  //
   this.lastNote = this.lastNote+intervalVector;
   this.nextNote = this.rootNote+arraySum(this.fullScaleNotes, this.lastNote);
 
   this.notes.push(this.nextNote);
-  //console.log("notes :"+this.notes);
-//  this.noiseInc += this.noiseRate;
-this.noiseInc = frame;
+  this.noiseInc = frame;
 
   // DISPLAY NOTES ON SCREEN
-this.displayNotes();
+  this.displayNotes();
 
-var data = {
-  direction: chosenDirection,
-  interval: chosenInterval,
-  leapOrStep: newdata.leapOrStep,
-  nextNote: this.nextNote,
-}
+  var data = {
+    direction: chosenDirection,
+    interval: chosenInterval,
+    leapOrStep: newdata.leapOrStep,
+    nextNote: this.nextNote,
+  }
   // RETURN NOTE
   return data;
 
@@ -81,37 +77,37 @@ var data = {
 
 Phrase.prototype.displayNotes = function(){
 
-    var notecounter =this.rootNote;
+  var notecounter =this.rootNote;
 
-    var sw =divwidth/arraySum(this.fullScaleNotes, 0);
-    var lineLength = 50;
-    var lineX = height*0.64-lineLength/2;
-    var scalemin = this.rootNote;
-    var scalemax = scalemin + arraySum(this.fullScaleNotes, 0);
+  var sw =divwidth/arraySum(this.fullScaleNotes, 0);
+  var lineLength = 50;
+  var lineX = height*0.64-lineLength/2;
+  var scalemin = this.rootNote;
+  var scalemax = scalemin + arraySum(this.fullScaleNotes, 0);
 
 
 
-    //grid
-    for (var i=0; i<127; i++){
-      strokeWeight(sw-10);
-      var ypos = map(i, scalemin, scalemax, 0, divwidth);
-      stroke(166, 193, 191);
-      line( ypos,lineX,  ypos, lineX+lineLength);
-    }
-    //scalenotes
-    for (var i=0; i<this.fullScaleNotes.length; i++){
-      strokeWeight(sw);
-     stroke(101, 122, 120);
-      notecounter += this.fullScaleNotes[i];
-      //var thisNoteFreq = midiToFreq(notecounter);
-      var ypos = map(notecounter, scalemin, scalemax, 0, divwidth);
-      line(ypos, lineX, ypos,  lineX+lineLength);
-    }
-    //currentnote
-    stroke(193, 176, 166);
-      strokeWeight(sw-4);
-    var ypos = map(this.nextNote, scalemin, scalemax, 0, divwidth);
-    line(ypos, lineX, ypos, lineX+lineLength);
+  //grid
+  for (var i=0; i<127; i++){
+    strokeWeight(sw-10);
+    var ypos = map(i, scalemin, scalemax, 0, divwidth);
+    stroke(166, 193, 191);
+    line( ypos,lineX,  ypos, lineX+lineLength);
+  }
+  //scalenotes
+  for (var i=0; i<this.fullScaleNotes.length; i++){
+    strokeWeight(sw);
+    stroke(101, 122, 120);
+    notecounter += this.fullScaleNotes[i];
+    //var thisNoteFreq = midiToFreq(notecounter);
+    var ypos = map(notecounter, scalemin, scalemax, 0, divwidth);
+    line(ypos, lineX, ypos,  lineX+lineLength);
+  }
+  //currentnote
+  stroke(193, 176, 166);
+  strokeWeight(sw-4);
+  var ypos = map(this.nextNote, scalemin, scalemax, 0, divwidth);
+  line(ypos, lineX, ypos, lineX+lineLength);
 
   //currentinterval
   noStroke();
@@ -119,6 +115,8 @@ Phrase.prototype.displayNotes = function(){
 
 }
 
+// whichinterval()
+// fires leaporstep() and currentornew() and returns the resulting interval
 
 Phrase.prototype.whichInterval = function(){
   var motion="";
@@ -137,6 +135,9 @@ Phrase.prototype.whichInterval = function(){
   return result;
 }
 
+// leaporstep()
+// decides if step or leap motion is to be favored
+
 Phrase.prototype.leapOrStep = function(){
   noiseSeed(this.noiseSeed+4);
 
@@ -146,16 +147,15 @@ Phrase.prototype.leapOrStep = function(){
   var choice=0;
 
   if(stim<this.stepWeight*portion){
-
     choice = "step";
-
   } else{
-
     choice = "leap";
   }
-
   return choice;
 }
+
+// currentornew()
+// decides between new and already used intervals
 
 Phrase.prototype.currentOrNew = function(){
   noiseSeed(this.noiseSeed);
@@ -165,47 +165,41 @@ Phrase.prototype.currentOrNew = function(){
   var choice=0;
 
   if(stim<this.currentIdeaWeight*portion||this.newIdeas.length===0){
-
     choice = this.whichCurrentIdea();
-
   } else{
-
     choice = this.whichNewIdea();
   }
-  //console.log("interval chosen: "+choice);
   return choice;
 }
 
+// whichcurrentidea()
+// returns an interval taken from currentideas array
+
 Phrase.prototype.whichCurrentIdea = function(){
+
   noiseSeed(this.noiseSeed+1);
   var stim = noise(this.noiseInc);
   var stimDivision = arraySum(this.currentIdeasWeights, 0);
   var portion = 1 / stimDivision;
   var choice=0;
-
-
   for (var i=0; i<this.currentIdeas.length; i++){
     var sum = arraySum(this.currentIdeasWeights, i);
     if(i===0&&stim<portion*sum){
       choice = i;
     }
-    else
-    if(stim<portion*sum&&stim>portion*arraySum(this.currentIdeasWeights, i-1)){
+    else if(stim<portion*sum&&stim>portion*arraySum(this.currentIdeasWeights, i-1)){
       choice = i;
     }
   }
   var result = this.currentIdeas[choice];
   this.newIdeaWeight += 1;
-  //  console.log("interval will be a currently known idea");
-  //  console.log("current ideas: "+this.currentIdeas);
-  //  console.log("current idea choice index: "+choice);
-  //  console.log("chosen current idea: "+result);
   return result;
 }
 
+// whichnewidea()
+// returns an interval picked from the newideas array
+
 Phrase.prototype.whichNewIdea = function(){
-  //  console.log("interval will be a new idea");
-  //  console.log("new ideas "+this.newIdeas);
   noiseSeed(this.noiseSeed+2);
   var stim = noise(this.noiseInc);
   var stimDivision = this.newIdeas.length;
@@ -221,16 +215,15 @@ Phrase.prototype.whichNewIdea = function(){
   this.currentIdeaWeight+=2;
   var result = this.newIdeas[choice];
 
-  //console.log("new idea choice index: "+choice);
-  //console.log("chosen new idea: "+result);
-
   this.newIdeasWeights = removeItem(this.newIdeasWeights, choice);
   this.newIdeas = removeItem(this.newIdeas, choice);
 
-  //console.log("new new ideas: "+this.newIdeas);
-  //console.log("new current ideas"+this.currentIdeas);
   return result;
 }
+
+// whichdirection()
+// picks whether voice will move up or down the scale
+// distance from middle note will skew that decision
 
 Phrase.prototype.whichDirection = function(){
   var middle = arraySum(this.fullScaleNotes, this.fullScaleNotes.length/2);

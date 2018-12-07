@@ -1,25 +1,25 @@
- /* hi there */
-/* css reset */
-*{
-margin: 0;
-color:white;
-padding: 0;
-text-align: center;
-font-family: Consolas;
-box-sizing:border-box;
-}
-#sketch-holder{
+@import url('https://fonts.googleapis.com/css?family=Inconsolata');
 
+*{
+  margin: 0;
+  color:white;
+  padding: 0;
+  text-align: center;
+  font-family: 'Inconsolata', monospace;
+  box-sizing:border-box;
+}
+
+#sketch-holder{
   cursor:cell;
 }
-/* ==== BODY ==== */
+
 body {
   /* violet*/
-background-color: #af30ff;
+  background-color: #af30ff;
 }
 
 h1{
-font-size: 50px;
+  font-size: 50px;
 }
 
 h4{
@@ -27,11 +27,10 @@ h4{
 }
 
 h5{
-
   padding:20px;
   text-indent:30px;
   text-align:left;
- color:black;
+  color:black;
   background-color:white;
   font-size:14px;
   font-family: Times New Roman;
@@ -39,49 +38,48 @@ h5{
 
 h6{
   /* violet*/
-background-color: #af30ff;
+  background-color: #af30ff;
   font-size:25px;
   text-indent:25px;
 }
+
 p{
-margin-bottom:20px;
-line-height: 30px;
+  margin-bottom:20px;
+  line-height: 30px;
 }
+
 a:link{
   /* pink */
-text-indent:0px;
-display:inline-block;
-text-decoration: none;
-padding:0px 10px;
-background-color: #ff317d;
+  text-indent:0px;
+  display:inline-block;
+  text-decoration: none;
+  padding:0px 10px;
+  background-color: #ff317d;
 }
-a:visited{
 
+a:visited{
 }
+
 a:hover{
   /* light pink */
   background-color: #ff5996;
-/*  color:black;*/
 }
-/* ==== NAV ==== */
 
 nav, header{
   opacity:0.85;
 }
+
 nav{
-box-shadow: 10px 10px 5px grey;
-position:fixed;
-font-weight:bold;
-font-size:25px;
-height:40px;
-top:135px;
-padding:7px;
-/* pink */
-background-color: #ff317d;
+  box-shadow: 10px 10px 5px grey;
+  position:fixed;
+  font-weight:bold;
+  font-size:25px;
+  height:40px;
+  top:135px;
+  padding:7px;
+  /* pink */
+  background-color: #ff317d;
 }
-
-
-/* ==== HEADER ==== */
 
 header{
   /*green*/
@@ -89,40 +87,41 @@ header{
   position:fixed;
   height:135px;
   top:0px;
-background-color: #a3ff32;
-font-size: 30px;
+  background-color: #a3ff32;
+  font-size: 30px;
 }
+
 header h3{
   font-weight:normal;
   padding:3px;
   font-size:26px;
   /*orange*/
-background-color: #ffb53f;
-
+  background-color: #ffb53f;
 }
 header h1{
-font-size:75px;
-padding:3px;
- /* blue */
-background-color: #3da9db;
+  font-size:75px;
+  padding:3px;
+  /* blue */
+  background-color: #3da9db;
 }
-
-/* ==== ARTICLE ==== */
 
 article h1{
- /* turquoise */
-background-color: #30ffb0;
+  /* turquoise */
+  background-color: #30ffb0;
 }
+
 article h2{
   /*orange*/
-background-color: #ffb53f;
-font-size: 25px;
+  background-color: #ffb53f;
+  font-size: 25px;
 }
+
 article h3{
   /* blue */
- background-color: #3da9db;
- font-size: 25px;
+  background-color: #3da9db;
+  font-size: 25px;
 }
+
 article h4{
   line-height:45px;
   padding: 20px;
@@ -131,36 +130,32 @@ article h4{
   height:208px;
   text-align:right;
   /* pink */
-color: #ff317d;
+  color: #ff317d;
 }
+
 article a:link{
-
-display:inline-block;
-text-decoration: none;
-margin:5px;
-padding:0px 10px;
-/* pink */
-background-color: #ff317d;
+  display:inline-block;
+  text-decoration: none;
+  margin:5px;
+  padding:0px 10px;
+  /* pink */
+  background-color: #ff317d;
 }
+
 article a:visited{
-
 }
+
 article a:hover{
   /* light pink #ff5996 */
   background-color: white;
   /* pink */
-color:#ff317d;
+  color:#ff317d;
 }
 
-
-
-
 /* ==== FOOTER ==== */
-
-
 
 footer{
   /* yellow  */
   font-size:11px;
-background-color: #fffb30;
+  background-color: #fffb30;
 }

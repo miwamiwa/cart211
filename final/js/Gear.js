@@ -1,3 +1,9 @@
+/*
+This script displays a gear object in the background
+*/
+
+// create gear object
+
 function Gear(x, y, dial, width, height){
   this.x = x;
   this.y = y;
@@ -5,13 +11,12 @@ function Gear(x, y, dial, width, height){
   this.dial =dial;
   this.w = width;
   this.h = height;
-  this.opacity =85;
+  this.opacity =25;
   switch(floor(random(0, 3))){
     case 0: this.chosenfill = color(166, 193, 191,   this.opacity); break;
     case 1: this.chosenfill = color(193, 176, 166,   this.opacity); break;
     case 2: this.chosenfill = color(173, 148, 133,   this.opacity); break;
   }
-
   this.direction=0;
   if(this.dial%2===0){
     this.direction = 1;
@@ -21,10 +26,10 @@ function Gear(x, y, dial, width, height){
   }
 }
 
-Gear.prototype.display = function(){
+// display the gear
 
+Gear.prototype.display = function(){
   this.angle = map(currentT[this.dial], 0, 60, 0, this.direction*2*PI);
-  //  console.log("ANGLE "+currentT[this.dial])
   push();
   imageMode(CENTER);
   translate(this.x, this.y);

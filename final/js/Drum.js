@@ -1,5 +1,6 @@
-
-// starting key midi value
+/*
+this was based on a drum code but is now the script for the main oscillator voice.
+*/
 var rootNote=60;
 
 function Drum(oscType){
@@ -179,54 +180,42 @@ Drum.prototype.loadInstrument = function(){
 
 // handleDrums()
 //
-// looped in draw(). handles playing this synth's sound.
+// triggers note based on rhythmic weight system, picks a note, plays a note.
 
 Drum.prototype.handleDrums = function(){
 
-  // if this instrument is turned on
   if(this.isPlaying){
 
     var sectionInfo = getSection(musicInc);
     var section = sectionInfo.currentSection;
     if(sectionInfo.currentSection!=lastsection){
 
-    phrase = new Phrase(sectionInfo.currentSection);
-  }
+      phrase = new Phrase(sectionInfo.currentSection);
+    }
     noiseSeed(sectionInfo.currentSection);
     lastsection = sectionInfo.currentSection;
-
     var weight =  this.salience(sectionInfo.framesSinceSection);
     var thisnoise = noise(sectionInfo.framesSinceSection*this.noiseInc);
     var stimulus = thisnoise*this.stimulusScale;
-    //console.log("stimulus 1"+stimulus);
 
     if(stimulus+weight>this.thresh&&weight!=0){
+
       sectionData.update();
       sectionData.display();
-
-    //var loudness = map(stimulus+weight, 0, this.stimulusScale+this.maxWeight, 0, 1);
-    //  loudness = constrain(loudness, 0, 1);
-      //  console.log("stimulus: "+stimulus);
-      //  console.log("loudness: "+loudness);
-
-      //this.filter.freq( 18150-loudness*18000 );
       var incomingnote = this.catchUpToNote(sectionInfo.currentSection, sectionInfo.framesSinceSection);
-    //  console.log("incoming note "+incomingnote);
       this.note = incomingnote;
-
-      //this.note = phrase.newNote(sectionInfo.currentSection, sectionInfo.framesSinceSection);
       var newNote =midiToFreq(constrain(this.note, 0, 127));
-    //  console.log("THE NEW NOTE IS : "+newNote);
+
       updateMenuInfo();
       this.thisSynth.freq(newNote);
-    //  console.log("note: "+newNote)
- this.env.play();
+      this.env.play();
       this.noteIndex+=1;
     }
-
   }
-
 }
+
+// salience()
+// get this frame's rhythmic salience and return weight
 
 Drum.prototype.salience = function(t){
 
@@ -267,12 +256,15 @@ Drum.prototype.salience = function(t){
   }
   return factor;
 }
+
+// catchuptonote()
+// add up intervals since the beginning of the section
+
 Drum.prototype.catchUpToNote = function(section, framesince){
   var numIntervals =0;
   var startNote;
   phrase = new Phrase(section);
   phrase.lastNote = floor(map(-cos(section*0.031), -1, 1, 1, phrase.fullScaleNotes.length))
-//  console.log("lastNote "+phrase.lastNote)
   noiseSeed(section);
   for (var i=0; i<framesince; i++){
     var weight =  this.salience(i);
@@ -280,39 +272,10 @@ Drum.prototype.catchUpToNote = function(section, framesince){
     var stimulus = thisnoise*this.stimulusScale;
     if(stimulus+weight>this.thresh&&weight!=0){
       var info = phrase.newNote(section, i);
-    startNote = info.nextNote;
-    currentMotion = info;
-  //  console.log("start note "+startNote)
+      startNote = info.nextNote;
+      currentMotion = info;
     }
   }
   updateMenuInfo();
   return startNote;
-}
-
-Drum.prototype.catchUpSection = function(){
-  var numIntervals=0;
-  var catchupstart = currentSection*sectionLength;
-  var catchupend = musicInc;
-  phrase.lastNote = phrase.fullScaleNotes[phrase.scaleNotes.length];
-
-  noiseSeed(currentSection);
-//  console.log("start "+catchupstart)
-//  console.log("end "+catchupend);
-  var catchuptime = [];
-
-  for (var i=catchupstart; i<catchupend; i++){
-    var weight =  this.salience(i);
-    var thisnoise = noise(i*this.noiseInc);
-    var stimulus = thisnoise*this.stimulusScale;
-    if(stimulus+weight>this.thresh&&weight!=0){
-    numIntervals +=1;
-    catchuptime.push(i);
-    }
-  }
-// console.log("intervals "+numIntervals);
- for (var i=0; i<numIntervals; i++){
-   phrase.lastNote = phrase.newNote(currentSection, catchuptime[i]);
- }
- // console.log("lastNote = "+phrase.lastNote);
-
 }
