@@ -84,12 +84,15 @@ function draw(){
   fill(225+zed);
   textSize(txtsize);
   text(hi, width/2-hi.length/2+zed/5, height/2-txtsize/2+zed/5);
+  fill(125)
+  textSize(14)
+  text("click on canvas add more droplets", width-250, height-5);
 }
 
 // update canvas size
 
 function update(){
-  
+
   lastWidth=window.innerWidth-20;
   background(255);
   if(window.innerHeight-100<defHeight){
