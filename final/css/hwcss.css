@@ -96,6 +96,9 @@ nav{
   font-size:4vw;
 }
 
+.menucolor{
+  color:rgb(166, 193, 191);
+}
 
 #clocksection{
   flex-basis: 40%;

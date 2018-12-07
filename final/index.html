@@ -112,26 +112,26 @@
         (random number between 0 and the max stimulus value) is generated.
         <br><h1 class="menuheader"></h1>
         Then, I check if the current frame lands on a rhythmic value
-        (bar, beat, subdiv, finediv). If it does, this rhythmic value's weight
-        (or "chance") is added to the stimulus value.
+        (<span class="menucolor">bar, beat, subdiv, finediv</span>). If it does, this rhythmic value's weight
+        (or <span class="menucolor">"chance"</span>) is added to the stimulus value.
         <br><h1 class="menuheader"></h1>
-        If:  ( stimulus + weight ) > play threshold, a note is triggered.
+        If:  ( stimulus + weight ) <span style="font-style: italic; ">is greater than</span> <span class="menucolor">play threshold</span>, a note is triggered.
         <h1 class="menuheader"> Scale </h1>
-        Scales are generated as stacks of random intervals. Each random interval is constrained
-        within a minimum and maximum size. A scale is fully generated once it reaches a
+        Scales are generated as stacks of random intervals. Each random <span class="menucolor">interval</span> is constrained
+        within a <span class="menucolor">minimum</span> and <span class="menucolor">maximum</span> size. A scale is fully generated once it reaches a
         note which is one or more octaves above the root note.
       </article>
 
       <article class="menuarticle hvr-round-corners">
         <h1 class="menuheader"> Pitch </h1>
 
-        Every new note trigger, my code picks a new interval and direction in order
+        Every new note trigger, my code picks a new <span class="menucolor">interval</span> and <span class="menucolor">direction</span> in order
         to pick the next scale pitch to play.
         <br><h1 class="menuheader"></h1>
         Intervals are picked either from a list of intervals played since the
         start of the last section, or from a list of intervals not yet explored.
         <br> The chosen interval is random, but once again numbers are skewed
-        following each interval's weight ("chance").
+        following each <span class="menucolor">interval</span>'s weight (<span class="menucolor">"chance"</span>).
         <br><h1 class="menuheader"></h1>
         Each section has an arbitrary
         (though also varying) start note in order to avoid having to keep track of
