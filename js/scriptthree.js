@@ -181,7 +181,7 @@ function mousePressed(){
 
   var mouseElsewhere=true;
   for(var i=0; i<frame; i++){
-    if(dist(mouseX,mouseY,e1x[i],e1y[i]) <e1d[i]/2&&(mouseX>500||mouseY>180)){
+    if(dist(mouseX,mouseY,e1x[i],e1y[i]) < e1d[i]/2 && (mouseX>500||mouseY>180)  ){
       link="midterm/index.html"
       windowObjectReference = window.open(link, "yo", strWindowFeatures);
       mouseElsewhere=false;
@@ -189,7 +189,7 @@ function mousePressed(){
   }
 
   for(var i=0; i<frame2; i++){
-    if(dist(mouseX,mouseY,e2x[i],e2y[i]) <e2d[i]/2&&mouseX>500&&mouseY>180){
+    if(dist(mouseX,mouseY,e2x[i],e2y[i]) <e2d[i]/2&& (mouseX>500||mouseY>180) ){
       link="final/index.html"
       windowObjectReference = window.open(link, "yo", strWindowFeatures);
       mouseElsewhere=false;
