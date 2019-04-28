@@ -100,6 +100,14 @@ function draw(){
   // run clock
   updateTime();
 
+  if(!soundStarted){
+    push();
+    fill(125, 0, 0);
+    textSize(30);
+
+     text("CLICK TO START SOUND", width/2, height*0.65);
+  }
+
 }
 
 function mousePressed(){
