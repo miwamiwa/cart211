@@ -41,6 +41,8 @@ var gearObject3;
 var gearObject4;
 var gearObject5;
 
+let soundStarted = false;
+
 // preload()
 //
 // load images
@@ -83,6 +85,8 @@ function setup(){
 
   // update clock text
   tellTime();
+
+  noLoop();
 }
 
 // draw()
@@ -95,6 +99,16 @@ function draw(){
   playSound();
   // run clock
   updateTime();
+
+}
+
+function mousePressed(){
+  if(!soundStarted){
+    soundStarted = true;
+    drums.thisSynth.start();
+    drums2.thisSynth.start();
+    loop();
+  }
 
 }
 

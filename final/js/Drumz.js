@@ -167,7 +167,7 @@ Drumz.prototype.loadInstrument = function(){
   // reconnect it with the filter this time
   this.thisSynth.connect(this.filter);
   // start audio
-  this.thisSynth.start();
+//  this.thisSynth.start();
   // set the initial frequency. do not set if this is the noise drum.
   if(this.synthType!='pink'&&this.synthType!='white'){this.thisSynth.freq(1);
   }
